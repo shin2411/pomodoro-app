@@ -309,6 +309,34 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
 .tgb-sub{font-size:11px;color:var(--text3);margin-top:1px}
 .tgb-prog{height:4px;background:var(--border);border-radius:2px;margin-top:6px;overflow:hidden}
 .tgb-prog-fill{height:100%;background:var(--acc);border-radius:2px;transition:width .6s}
+/* MINI GOAL */
+.goal-card-detail-btn{font-size:11px;color:var(--acc);background:none;border:1px solid var(--acc-md);border-radius:6px;padding:2px 8px;cursor:pointer;flex-shrink:0;transition:background .15s}
+.goal-card-detail-btn:hover{background:var(--acc-lt)}
+.gm-chart-toggle{display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:14px;width:fit-content}
+.gm-chart-btn{padding:5px 14px;font-size:11px;font-weight:500;border:none;background:var(--bg);color:var(--text3);cursor:pointer;transition:background .15s,color .15s}
+.gm-chart-btn.active{background:var(--acc);color:white}
+.gm-chart-btn+.gm-chart-btn{border-left:1px solid var(--border)}
+.gm-chart-wrap{margin-bottom:16px}
+.gm-bar-chart{display:flex;flex-direction:column;gap:8px}
+.gm-bar-row{display:flex;align-items:center;gap:8px}
+.gm-bar-label{font-size:12px;color:var(--text2);width:80px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gm-bar-track{flex:1;height:18px;background:var(--bg2);border-radius:9px;overflow:hidden;position:relative}
+.gm-bar-fill{height:100%;border-radius:9px;background:var(--acc);transition:width .6s}
+.gm-bar-val{position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:10px;font-weight:600;color:var(--text)}
+.gm-pie-wrap{display:flex;align-items:center;gap:16px;margin-bottom:4px}
+.gm-pie-legend{flex:1;display:flex;flex-direction:column;gap:6px}
+.gm-pie-legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2)}
+.gm-pie-legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.gm-mini-form{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:12px}
+.gm-mini-form-title{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:.5px;margin-bottom:8px}
+.gm-mini-list{display:flex;flex-direction:column;gap:4px;margin-bottom:8px}
+.gm-mini-item{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg);border:1px solid var(--border);border-radius:8px}
+.gm-mini-name{flex:1;font-size:13px;color:var(--text)}
+.gm-mini-prog{font-size:11px;color:var(--text2);white-space:nowrap}
+.gm-mini-del{background:none;border:none;cursor:pointer;color:var(--text3);font-size:11px;padding:2px 5px;border-radius:4px}
+.gm-mini-del:hover{color:#EF4444}
+.gm-mini-bar{height:3px;background:var(--border);border-radius:2px;margin-top:4px;overflow:hidden}
+.gm-mini-bar-fill{height:100%;border-radius:2px;background:var(--acc);transition:width .5s}
 .todo-divider{border:none;border-top:1px solid var(--border);margin:18px 0 14px}
 /* UNDO BAR */
 .undo-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:10px;font-size:12px;color:var(--text2)}
@@ -370,6 +398,10 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
         <span class="tgb-lbl" data-i="tgb_label">現在の目標</span>
         <select class="tgb-sel" id="tgb-sel" onchange="setActiveGoal(this.value)"></select>
       </div>
+      <div class="tgb-row" id="tgb-mini-row" style="display:none">
+        <span class="tgb-lbl" style="color:var(--text3);font-size:10px" data-i="tgb_mini_label">ミニ目標</span>
+        <select class="tgb-sel" id="tgb-mini-sel" onchange="setActiveMini(this.value)"></select>
+      </div>
       <div class="tgb-remain" id="tgb-remain"></div>
       <div class="tgb-sub" id="tgb-sub"></div>
       <div class="tgb-prog"><div class="tgb-prog-fill" id="tgb-fill" style="width:0%"></div></div>
@@ -390,46 +422,117 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
       <div class="grid2">
         <div class="scard"><div class="sval" id="sv-min">0</div><div class="slbl2" data-i="stat_total">総集中時間（分）</div></div>
         <div class="scard"><div class="sval" id="sv-cnt">0</div><div class="slbl2" data-i="stat_sessions">完了セッション</div></div>
-        <div class="scard"><div class="sval" id="sv-avg">0</div><div class="slbl2" data-i="stat_avg">平均（分 / 回）</div></div>
+        <div class="scard">
+          <div class="sval" id="sv-avg">0</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px;gap:4px">
+            <div class="slbl2" data-i="stat_avg" style="margin-top:0;flex:1">1回あたりの平均集中時間</div>
+            <div style="display:flex;border:1px solid var(--border);border-radius:6px;overflow:hidden;flex-shrink:0">
+              <button class="avg-p-btn active" id="avg-today" onclick="setAvgPeriod('today')" style="padding:2px 5px;font-size:9px;border:none;background:var(--bg);color:var(--text3);cursor:pointer" data-i="cp_today">今日</button>
+              <button class="avg-p-btn" id="avg-week" onclick="setAvgPeriod('week')" style="padding:2px 5px;font-size:9px;border:none;border-left:1px solid var(--border);background:var(--bg);color:var(--text3);cursor:pointer" data-i="cp_week">今週</button>
+              <button class="avg-p-btn" id="avg-month" onclick="setAvgPeriod('month')" style="padding:2px 5px;font-size:9px;border:none;border-left:1px solid var(--border);background:var(--bg);color:var(--text3);cursor:pointer" data-i="cp_month">今月</button>
+            </div>
+          </div>
+        </div>
         <div class="scard"><div class="sval" id="sv-today">0</div><div class="slbl2" data-i="stat_today">今日のセッション</div></div>
       </div>
-      <div class="ccard"><div class="cttl" data-i="chart_week">今週の集中時間（分）</div><div class="bars" id="wchart"></div></div>
+      <div class="ccard">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div class="cttl" id="chart-title" style="margin-bottom:0">今週の集中時間（分）</div>
+          <div class="gm-chart-toggle" style="margin-bottom:0">
+            <button class="gm-chart-btn active" id="cp-today" onclick="setChartPeriod('today')" data-i="cp_today">今日</button>
+            <button class="gm-chart-btn" id="cp-week" onclick="setChartPeriod('week')" data-i="cp_week">今週</button>
+            <button class="gm-chart-btn" id="cp-month" onclick="setChartPeriod('month')" data-i="cp_month">今月</button>
+          </div>
+        </div>
+        <div class="bars" id="wchart"></div>
+      </div>
       <div class="cal-card">
         <div class="cal-nav"><button onclick="calPrev()">&#8249;</button><div class="cal-month" id="cal-month"></div><button onclick="calNext()">&#8250;</button></div>
         <div class="cal-grid" id="cal-grid"></div>
-        <div class="cal-legend"><span data-i="cal_legend">集中時間:</span><div class="cal-legend-dots"><div class="cal-legend-dot" style="background:#BFDBFE"></div><div class="cal-legend-dot" style="background:#93C5FD"></div><div class="cal-legend-dot" style="background:#3B82F6"></div><div class="cal-legend-dot" style="background:#1D4ED8"></div></div><span data-i="cal_less">少 → 多</span></div>
+        <div class="cal-legend">
+          <span data-i="cal_legend">集中時間:</span>
+          <div class="cal-legend-dots">
+            <div class="cal-legend-dot" style="background:#F1F5F9"></div>
+            <div class="cal-legend-dot" style="background:#BFDBFE"></div>
+            <div class="cal-legend-dot" style="background:#93C5FD"></div>
+            <div class="cal-legend-dot" style="background:#3B82F6"></div>
+            <div class="cal-legend-dot" style="background:#1D4ED8"></div>
+            <div class="cal-legend-dot" style="background:#D4A017"></div>
+          </div>
+          <span style="font-size:10px;color:var(--text3)">0 / 1〜30 / 31〜60 / 61〜90 / 91分〜 / ⭐金</span>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- 目標 + TODO -->
   <div id="page-todo" class="page">
-    <!-- ── 目標セクション ── -->
-    <div class="goal-form">
-      <div class="goal-form-title" data-i="goal_form_title">新しい目標</div>
-      <input class="goal-input" id="g-subj" type="text" maxlength="40" data-i-ph="goal_subj_ph">
-      <div class="goal-input-row">
-        <input class="goal-input" id="g-days" type="number" min="1" max="3650" placeholder="30">
-        <span class="goal-unit" data-i="goal_days_unit">日間</span>
-        <input class="goal-input" id="g-hours" type="number" min="1" max="9999" placeholder="50">
-        <span class="goal-unit" data-i="goal_hours_unit">時間</span>
+    <div class="sub-tabs">
+      <button class="sub-tab active" id="st-goal" onclick="goalSubTab('goal')" data-i="stab_goal">目標</button>
+      <button class="sub-tab" id="st-gtodo" onclick="goalSubTab('gtodo')" data-i="stab_todo">ToDo</button>
+    </div>
+
+    <!-- 目標サブページ -->
+    <div id="sp-goal" class="sub-pane active">
+      <div class="goal-form">
+        <div class="goal-form-title" data-i="goal_form_title">新しい目標を追加</div>
+        <input class="goal-input" id="g-subj" type="text" maxlength="40" data-i-ph="goal_subj_ph" style="margin-bottom:8px">
+        <div class="goal-input-row" style="margin-bottom:8px">
+          <input class="goal-input" id="g-days" type="number" min="1" max="3650" placeholder="30">
+          <span class="goal-unit" data-i="goal_days_unit">日間</span>
+        </div>
+        <!-- ミニ目標トグル -->
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <label class="tog" style="flex-shrink:0"><input type="checkbox" id="g-use-mini" onchange="toggleMiniMode()"><span class="tbg"></span><span class="tth"></span></label>
+          <span style="font-size:13px;color:var(--text)" data-i="goal_use_mini">ミニ目標で時間を管理する</span>
+        </div>
+        <!-- 通常モード：合計時間を入力 -->
+        <div id="g-hours-row" class="goal-input-row" style="margin-bottom:8px">
+          <input class="goal-input" id="g-hours" type="number" min="1" max="9999" placeholder="50">
+          <span class="goal-unit" data-i="goal_hours_unit">時間</span>
+        </div>
+        <!-- ミニ目標モード：ミニ目標を入力して追加 -->
+        <div id="g-mini-rows" style="display:none;margin-bottom:8px">
+          <div id="g-mini-list" style="display:flex;flex-direction:column;gap:4px;margin-bottom:6px"></div>
+          <div style="display:flex;gap:6px;align-items:center">
+            <input class="goal-input" id="g-mini-name" type="number" style="display:none">
+            <input class="goal-input" id="g-mini-name-txt" type="text" maxlength="30" placeholder="ミニ目標の名前" style="flex:1">
+            <input class="goal-input" id="g-mini-h" type="number" min="1" max="9999" placeholder="10" style="width:60px">
+            <span class="goal-unit" data-i="goal_hours_unit">時間</span>
+            <button class="stb" style="width:auto;padding:5px 10px;border-radius:8px;font-size:12px" onclick="addFormMini()">+</button>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-top:6px" id="g-mini-total"></div>
+        </div>
+        <button class="goal-add-btn" onclick="addGoal()" data-i="goal_add_btn">目標を追加</button>
       </div>
-      <button class="goal-add-btn" onclick="addGoal()" data-i="goal_add_btn">目標を追加</button>
+      <div class="sec-label" data-i="goal_list_lbl">目標一覧</div>
+      <div class="undo-bar" id="goal-undo-bar" style="display:none"><span id="goal-undo-msg"></span><button class="undo-btn" id="goal-undo-btn" onclick="undoGoal()">↩ 元に戻す</button></div>
+      <div class="goal-list" id="goal-list"></div>
     </div>
-    <div class="sec-label" data-i="goal_list_lbl">目標一覧</div>
-    <div class="undo-bar" id="goal-undo-bar" style="display:none"><span id="goal-undo-msg"></span><button class="undo-btn" id="goal-undo-btn" onclick="undoGoal()">↩ 元に戻す</button></div>
-    <div class="goal-list" id="goal-list"></div>
-    <!-- ── ToDoセクション ── -->
-    <hr class="todo-divider">
-    <div class="sec-label" data-i="todo_sec_lbl">ToDo リスト</div>
-    <div class="todo-input-row"><input class="todo-input" id="todo-input" type="text" maxlength="80" onkeydown="if(event.key==='Enter')addTodo()"><button class="todo-add-btn" onclick="addTodo()" data-i="todo_add">追加</button></div>
-    <div class="todo-filters">
-      <button class="todo-filter active" id="tf-all" onclick="setFilter('all')" data-i="todo_all">すべて</button>
-      <button class="todo-filter" id="tf-active" onclick="setFilter('active')" data-i="todo_active">未完了</button>
-      <button class="todo-filter" id="tf-done" onclick="setFilter('done')" data-i="todo_done">完了</button>
+
+    <!-- ToDoサブページ -->
+    <div id="sp-gtodo" class="sub-pane">
+      <div class="todo-input-row"><input class="todo-input" id="todo-input" type="text" maxlength="80" onkeydown="if(event.key==='Enter')addTodo()"><button class="todo-add-btn" onclick="addTodo()" data-i="todo_add">追加</button></div>
+      <div class="todo-filters">
+        <button class="todo-filter active" id="tf-all" onclick="setFilter('all')" data-i="todo_all">すべて</button>
+        <button class="todo-filter" id="tf-active" onclick="setFilter('active')" data-i="todo_active">未完了</button>
+        <button class="todo-filter" id="tf-done" onclick="setFilter('done')" data-i="todo_done">完了</button>
+      </div>
+      <div class="undo-bar" id="todo-undo-bar" style="display:none"><span id="todo-undo-msg"></span><button class="undo-btn" id="todo-undo-btn" onclick="undoTodo()">↩ 元に戻す</button></div>
+      <div id="todo-list"></div>
+      <div class="todo-footer"><span id="todo-count"></span><button class="todo-clear" onclick="clearDone()" data-i="todo_clear_done">完了済みを削除</button></div>
     </div>
-    <div id="todo-list"></div>
-    <div class="todo-footer"><span id="todo-count"></span><button class="todo-clear" onclick="clearDone()" data-i="todo_clear_done">完了済みを削除</button></div>
+  </div>
+
+  <!-- ゴール詳細モーダル -->
+  <div id="goal-modal-bg" class="day-modal-bg" style="display:none" onclick="if(event.target===this)closeGoalModal()">
+    <div class="day-modal" style="max-height:85vh">
+      <div class="day-modal-header">
+        <div class="day-modal-title" id="gm-title">目標詳細</div>
+        <button class="day-modal-close" onclick="closeGoalModal()">&#10005;</button>
+      </div>
+      <div id="gm-body"></div>
+    </div>
   </div>
 
   <!-- SHOP -->
@@ -485,6 +588,11 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
         <select class="sel" id="lang-sel" onchange="setLang(this.value)"><option value="ja">日本語</option><option value="zh">中文</option></select>
       </div>
     </div>
+    <div class="ssec">
+      <div class="sstt" style="color:#F59E0B">🧪 テスト用</div>
+      <div class="srow"><span class="slb" style="font-size:13px">今日に92分の記録を追加</span><button class="stb" style="width:auto;padding:5px 10px;border-radius:8px;font-size:12px" onclick="addTestRecord()">追加</button></div>
+      <div class="srow"><span class="slb" style="font-size:13px">追加したテスト記録を削除</span><button class="stb" style="width:auto;padding:5px 10px;border-radius:8px;font-size:12px;color:#EF4444" onclick="removeTestRecord()">削除</button></div>
+    </div>
     <button class="savebtn" onclick="saveSettings()" data-i="save_btn">保存する</button>
   </div>
 </div>
@@ -493,8 +601,8 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
 <script>
 // ── I18N ──
 const I18N={
-  ja:{tab_timer:'タイマー',tab_record:'記録',tab_todo:'目標',tab_shop:'店',tab_settings:'設定',tab_history:'履歴',tab_stats:'統計',mode_cd:'カウントダウン',mode_cu:'カウントアップ',coin_label:'コイン',stat_total:'総集中時間（分）',stat_sessions:'完了セッション',stat_avg:'平均（分 / 回）',stat_today:'今日のセッション',chart_week:'今週の集中時間（分）',cal_legend:'集中時間:',cal_less:'少 → 多',shop_title:'ショップ',shop_themes:'カラーテーマ',shop_skins:'スキン',set_timer:'タイマー時間',set_focus:'集中',set_short:'小休憩',set_long:'長休憩',set_auto:'自動スタート',set_auto_break:'休憩を自動でスタート',set_auto_focus:'集中を自動でスタート',set_alarm:'アラーム音量',set_volume:'音量',set_test_alarm:'テスト再生',set_skin:'スキン',set_theme:'カラーテーマ',set_lang:'言語 / Language',set_lang_label:'言語',save_btn:'保存する',phase_focus:'集中',phase_short:'小休憩',phase_long:'長休憩',toast_complete:'セッション完了！',toast_break_end:'休憩終了！',toast_saved:'設定を保存しました',toast_bought:'購入しました！',toast_no_coins:'コインが足りません',toast_applied:'適用しました',min_unit:'分',times_unit:'回目',owned:'所持中',active_lbl:'使用中',buy:'購入する',use:'使う',free:'無料',history_empty:'まだセッションがありません',todo_placeholder:'新しいタスクを入力…',todo_add:'追加',todo_all:'すべて',todo_active:'未完了',todo_done:'完了',todo_clear_done:'完了済みを削除',todo_remaining:'件残り',todo_empty:'タスクがありません',goal_form_title:'新しい目標を追加',goal_subj_ph:'科目・テーマを入力',goal_days_unit:'日間',goal_hours_unit:'時間',goal_add_btn:'目標を追加',goal_list_lbl:'目標一覧',todo_sec_lbl:'ToDo リスト',goal_empty:'目標がまだありません',goal_no_active:'目標を選択',tgb_label:'現在の目標',tgb_none:'目標なし',tgb_done:'🎉 目標達成！',tgb_remain:'あと {h} 時間で達成！',goal_progress:'{done} / {total} 時間',goal_active_now:'進行中',goal_day_unit:'日間',goal_done_badge:'🎉 達成！'},
-  zh:{tab_timer:'计时器',tab_record:'记录',tab_todo:'目标',tab_shop:'商店',tab_settings:'设置',tab_history:'历史',tab_stats:'统计',mode_cd:'倒计时',mode_cu:'正计时',coin_label:'硬币',stat_total:'总专注时间（分）',stat_sessions:'完成场次',stat_avg:'平均（分/次）',stat_today:'今日场次',chart_week:'本周专注时间（分）',cal_legend:'专注时间:',cal_less:'少 → 多',shop_title:'商店',shop_themes:'颜色主题',shop_skins:'皮肤',set_timer:'计时设置',set_focus:'专注',set_short:'短休息',set_long:'长休息',set_auto:'自动开始',set_auto_break:'自动开始休息',set_auto_focus:'自动开始专注',set_alarm:'闹钟音量',set_volume:'音量',set_test_alarm:'测试播放',set_skin:'皮肤',set_theme:'颜色主题',set_lang:'言語 / Language',set_lang_label:'语言',save_btn:'保存',phase_focus:'专注',phase_short:'短休息',phase_long:'长休息',toast_complete:'场次完成！',toast_break_end:'休息结束！',toast_saved:'设置已保存',toast_bought:'购买成功！',toast_no_coins:'硬币不足',toast_applied:'已应用',min_unit:'分',times_unit:'次',owned:'已拥有',active_lbl:'使用中',buy:'购买',use:'使用',free:'免费',history_empty:'还没有记录',todo_placeholder:'输入新任务…',todo_add:'添加',todo_all:'全部',todo_active:'未完成',todo_done:'已完成',todo_clear_done:'删除已完成',todo_remaining:'项未完成',todo_empty:'没有任务',goal_form_title:'添加新目标',goal_subj_ph:'输入科目或主题',goal_days_unit:'天',goal_hours_unit:'小时',goal_add_btn:'添加目标',goal_list_lbl:'目标列表',todo_sec_lbl:'待办清单',goal_empty:'还没有目标',goal_no_active:'选择目标',tgb_label:'当前目标',tgb_none:'无目标',tgb_done:'🎉 目标达成！',tgb_remain:'还差 {h} 小时！',goal_progress:'已学 {done} / 目标 {total} 小时',goal_active_now:'进行中',goal_day_unit:'天',goal_done_badge:'🎉 达成！'}
+  ja:{tab_timer:'タイマー',tab_record:'記録',tab_todo:'目標',tab_shop:'店',tab_settings:'設定',tab_history:'履歴',tab_stats:'統計',mode_cd:'カウントダウン',mode_cu:'カウントアップ',coin_label:'コイン',stat_total:'総集中時間（分）',stat_sessions:'完了セッション',stat_avg:'1回あたりの平均集中時間',stat_today:'今日のセッション',chart_week:'今週の集中時間（分）',cal_legend:'集中時間:',cal_less:'少 → 多',cp_today:'今日',cp_week:'今週',cp_month:'今月',cp_title_today:'今日の集中時間（分）',cp_title_week:'今週の集中時間（分）',cp_title_month:'今月の集中時間（分）',shop_title:'ショップ',shop_themes:'カラーテーマ',shop_skins:'スキン',set_timer:'タイマー時間',set_focus:'集中',set_short:'小休憩',set_long:'長休憩',set_auto:'自動スタート',set_auto_break:'休憩を自動でスタート',set_auto_focus:'集中を自動でスタート',set_alarm:'アラーム音量',set_volume:'音量',set_test_alarm:'テスト再生',set_skin:'スキン',set_theme:'カラーテーマ',set_lang:'言語 / Language',set_lang_label:'言語',save_btn:'保存する',phase_focus:'集中',phase_short:'小休憩',phase_long:'長休憩',toast_complete:'セッション完了！',toast_break_end:'休憩終了！',toast_saved:'設定を保存しました',toast_bought:'購入しました！',toast_no_coins:'コインが足りません',toast_applied:'適用しました',min_unit:'分',times_unit:'回目',owned:'所持中',active_lbl:'使用中',buy:'購入する',use:'使う',free:'無料',history_empty:'まだセッションがありません',todo_placeholder:'新しいタスクを入力…',todo_add:'追加',todo_all:'すべて',todo_active:'未完了',todo_done:'完了',todo_clear_done:'完了済みを削除',todo_remaining:'件残り',todo_empty:'タスクがありません',goal_form_title:'新しい目標を追加',goal_subj_ph:'科目・テーマを入力',goal_days_unit:'日間',goal_hours_unit:'時間',goal_add_btn:'目標を追加',goal_use_mini:'ミニ目標で時間を管理する',goal_list_lbl:'目標一覧',todo_sec_lbl:'ToDo リスト',goal_empty:'目標がまだありません',goal_no_active:'目標を選択',tgb_label:'現在の目標',tgb_none:'目標なし',tgb_done:'🎉 目標達成！',tgb_remain:'あと {h} 時間で達成！',goal_progress:'{done} / {total} 時間',goal_active_now:'進行中',goal_day_unit:'日間',goal_done_badge:'🎉 達成！',stab_goal:'目標',stab_todo:'ToDo',gm_detail:'詳細を開く',gm_mini_title:'ミニ目標',gm_mini_ph:'ミニ目標の名前',gm_mini_add:'追加',gm_mini_empty:'ミニ目標がありません',gm_chart_bar:'棒グラフ',gm_chart_pie:'円グラフ',gm_main:'全体',gm_remain:'残り',tgb_mini_label:'ミニ目標'},
+  zh:{tab_timer:'计时器',tab_record:'记录',tab_todo:'目标',tab_shop:'商店',tab_settings:'设置',tab_history:'历史',tab_stats:'统计',mode_cd:'倒计时',mode_cu:'正计时',coin_label:'硬币',stat_total:'总专注时间（分）',stat_sessions:'完成场次',stat_avg:'每次平均专注时间',stat_today:'今日场次',chart_week:'本周专注时间（分）',cal_legend:'专注时间:',cal_less:'少 → 多',cp_today:'今日',cp_week:'本周',cp_month:'本月',cp_title_today:'今日专注时间（分）',cp_title_week:'本周专注时间（分）',cp_title_month:'本月专注时间（分）',shop_title:'商店',shop_themes:'颜色主题',shop_skins:'皮肤',set_timer:'计时设置',set_focus:'专注',set_short:'短休息',set_long:'长休息',set_auto:'自动开始',set_auto_break:'自动开始休息',set_auto_focus:'自动开始专注',set_alarm:'闹钟音量',set_volume:'音量',set_test_alarm:'测试播放',set_skin:'皮肤',set_theme:'颜色主题',set_lang:'言語 / Language',set_lang_label:'语言',save_btn:'保存',phase_focus:'专注',phase_short:'短休息',phase_long:'长休息',toast_complete:'场次完成！',toast_break_end:'休息结束！',toast_saved:'设置已保存',toast_bought:'购买成功！',toast_no_coins:'硬币不足',toast_applied:'已应用',min_unit:'分',times_unit:'次',owned:'已拥有',active_lbl:'使用中',buy:'购买',use:'使用',free:'免费',history_empty:'还没有记录',todo_placeholder:'输入新任务…',todo_add:'添加',todo_all:'全部',todo_active:'未完成',todo_done:'已完成',todo_clear_done:'删除已完成',todo_remaining:'项未完成',todo_empty:'没有任务',goal_form_title:'添加新目标',goal_subj_ph:'输入科目或主题',goal_days_unit:'天',goal_hours_unit:'小时',goal_add_btn:'添加目标',goal_use_mini:'用子目标管理时间',goal_list_lbl:'目标列表',todo_sec_lbl:'待办清单',goal_empty:'还没有目标',goal_no_active:'选择目标',tgb_label:'当前目标',tgb_none:'无目标',tgb_done:'🎉 目标达成！',tgb_remain:'还差 {h} 小时！',goal_progress:'已学 {done} / 目标 {total} 小时',goal_active_now:'进行中',goal_day_unit:'天',goal_done_badge:'🎉 达成！',stab_goal:'目标',stab_todo:'待办',gm_detail:'查看详情',gm_mini_title:'子目标',gm_mini_ph:'子目标名称',gm_mini_add:'添加',gm_mini_empty:'还没有子目标',gm_chart_bar:'柱状图',gm_chart_pie:'饼图',gm_main:'总体',gm_remain:'剩余',tgb_mini_label:'子目标'}
 };
 
 // ── COLOR THEMES ──
@@ -539,6 +647,7 @@ let alarmVol=parseInt(localStorage.getItem('pomo-vol')||'70');
 let todos=JSON.parse(localStorage.getItem('pomo-todos')||'[]');
 let goals=JSON.parse(localStorage.getItem('pomo-goals')||'[]');
 let activeGoalId=localStorage.getItem('pomo-active-goal')||'';
+let activeMiniId=localStorage.getItem('pomo-active-mini')||'';
 let todoFilter='all';
 let timerMode='cd';
 let running=false,iv=null,sessions=0,phase='focus',rem=cfg.focus*60,secSess=0,coinSess=0;
@@ -557,7 +666,7 @@ function sp(){
   localStorage.setItem('pomo-hist',JSON.stringify(hist));
 }
 function stt(){localStorage.setItem('pomo-todos',JSON.stringify(todos));}
-function sg(){localStorage.setItem('pomo-goals',JSON.stringify(goals));localStorage.setItem('pomo-active-goal',activeGoalId);}
+function sg(){localStorage.setItem('pomo-goals',JSON.stringify(goals));localStorage.setItem('pomo-active-goal',activeGoalId);localStorage.setItem('pomo-active-mini',activeMiniId);}
 
 // アプリを閉じる直前に全データを保存
 window.addEventListener('beforeunload',()=>{
@@ -566,6 +675,7 @@ window.addEventListener('beforeunload',()=>{
   localStorage.setItem('pomo-todos',JSON.stringify(todos));
   localStorage.setItem('pomo-goals',JSON.stringify(goals));
   localStorage.setItem('pomo-active-goal',activeGoalId);
+  localStorage.setItem('pomo-active-mini',activeMiniId);
   localStorage.setItem('pomo-owned',JSON.stringify(owned));
   localStorage.setItem('pomo-skins',JSON.stringify(ownedSkins));
   localStorage.setItem('pomo-cfg',JSON.stringify(cfg));
@@ -660,7 +770,11 @@ function finish(){
   clearInterval(iv);running=false;secSess=0;coinSess=0;
   document.getElementById('ico-play').style.display='';document.getElementById('ico-pause').style.display='none';
   playAlarm();
-  if(phase==='focus'){sessions++;hist.unshift({ts:Date.now(),dur:cfg.focus*60});sp();toast(t('toast_complete')+' '+sessions+t('times_unit'));}else toast(t('toast_break_end'));
+  if(phase==='focus'){
+    sessions++;
+    hist.unshift({ts:Date.now(),dur:cfg.focus*60,goalId:activeGoalId||'',miniId:activeMiniId||''});
+    sp();toast(t('toast_complete')+' '+sessions+t('times_unit'));
+  }else toast(t('toast_break_end'));
   checkGoalBonus();
   const next=phase==='focus'?(sessions%4===0?'long':'short'):'focus';phase=next;rem=tot(next);cuSec=0;drawT();
   const auto=next==='focus'?cfg.autoFocus:cfg.autoBreak;if(auto)setTimeout(()=>{if(!running)toggleTimer();},1000);
@@ -671,8 +785,9 @@ function checkGoalBonus(){
   const g=goals.find(x=>String(x.id)===String(activeGoalId));
   if(!g||g.bonusGiven)return;
   const doneMin=goalDoneMin(g);
-  if(doneMin>=g.hours*60){
-    const bonus=g.hours*30;
+  const totalMin=goalTotalMin(g);
+  if(doneMin>=totalMin){
+    const bonus=Math.round(totalMin/60)*30;
     g.bonusGiven=true;
     coins+=bonus;
     sp();sg();
@@ -704,7 +819,7 @@ function showBonusPop(bonus){
 }
 function doReset(){
   clearInterval(iv);running=false;
-  if(timerMode==='cu'&&secSess>=60){hist.unshift({ts:cuStartTs||Date.now(),dur:secSess,endTs:Date.now(),mode:'cu'});sp();checkGoalBonus();}
+  if(timerMode==='cu'&&secSess>=60){hist.unshift({ts:cuStartTs||Date.now(),dur:secSess,endTs:Date.now(),mode:'cu',goalId:activeGoalId||'',miniId:activeMiniId||''});sp();checkGoalBonus();}
   cuStartTs=null;rem=tot(phase);cuSec=0;secSess=0;coinSess=0;
   document.getElementById('ico-play').style.display='';document.getElementById('ico-pause').style.display='none';drawT();
 }
@@ -716,18 +831,25 @@ function nav(id,btn){
   document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');btn.classList.add('active');
   if(id==='record'){renderHist();renderStats();renderCal();}
-  if(id==='todo'){renderGoals();renderTodos();}
+  if(id==='todo'){renderGoals();}
   if(id==='shop')renderShop();
   if(id==='settings')loadSettings();
 }
+function goalSubTab(id){
+  ['goal','gtodo'].forEach(k=>{
+    document.getElementById('st-'+k).classList.toggle('active',k===id);
+    document.getElementById('sp-'+k).classList.toggle('active',k===id);
+  });
+  if(id==='gtodo')renderTodos();
+  if(id==='goal')renderGoals();
+}
 function subTab(id){
-  document.querySelectorAll('.sub-tab').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.sub-pane').forEach(p=>p.classList.remove('active'));
-  document.getElementById('st-'+id).classList.add('active');
-  document.getElementById('sp-'+id).classList.add('active');
+  document.getElementById('st-history').classList.toggle('active',id==='history');
+  document.getElementById('st-stats').classList.toggle('active',id==='stats');
+  document.getElementById('sp-history').classList.toggle('active',id==='history');
+  document.getElementById('sp-stats').classList.toggle('active',id==='stats');
   if(id==='stats'){renderStats();renderCal();}
 }
-
 // ── HISTORY ──
 function renderHist(){
   const el=document.getElementById('hist-body');
@@ -776,20 +898,116 @@ function delS(ts){
 }
 
 // ── STATS ──
-function renderStats(){
-  const tot2=hist.reduce((a,s)=>a+s.dur,0);
-  document.getElementById('sv-min').textContent=Math.round(tot2/60);
-  document.getElementById('sv-cnt').textContent=hist.length;
-  document.getElementById('sv-avg').textContent=hist.length?Math.round(tot2/60/hist.length):0;
-  document.getElementById('sv-today').textContent=hist.filter(s=>new Date(s.ts).toDateString()===new Date().toDateString()).length;
-  const days=lang==='zh'?['日','一','二','三','四','五','六']:['日','月','火','水','木','金','土'];
-  const now=new Date(),wd=Array(7).fill(0);
-  hist.forEach(s=>{const diff=Math.floor((now-new Date(s.ts))/86400000);if(diff<7)wd[6-diff]+=Math.round(s.dur/60);});
-  const mx=Math.max(...wd,1);
-  document.getElementById('wchart').innerHTML=wd.map((v,i)=>{const di=(now.getDay()-6+i+7)%7;return`<div class="bw"><div class="bar${i===6?' today':''}" style="height:${Math.round((v/mx)*72)+3}px"></div><div class="blbl">${days[di]}</div></div>`;}).join('');
+let chartPeriod='week';
+let avgPeriod='today';
+
+function setAvgPeriod(p){
+  avgPeriod=p;
+  ['today','week','month'].forEach(k=>{
+    const btn=document.getElementById('avg-'+k);
+    if(btn){btn.style.background=k===p?'var(--acc)':'var(--bg)';btn.style.color=k===p?'white':'var(--text3)';}
+  });
+  updateAvgStat();
 }
+function updateAvgStat(){
+  const el=document.getElementById('sv-avg');
+  if(!el)return;
+  const now=new Date();
+  let filtered;
+  if(avgPeriod==='today'){
+    filtered=hist.filter(s=>new Date(s.ts).toDateString()===now.toDateString());
+  }else if(avgPeriod==='week'){
+    filtered=hist.filter(s=>Math.floor((now-new Date(s.ts))/86400000)<7);
+  }else{
+    filtered=hist.filter(s=>{const d=new Date(s.ts);return d.getFullYear()===now.getFullYear()&&d.getMonth()===now.getMonth();});
+  }
+  el.textContent=filtered.length?Math.round(filtered.reduce((a,s)=>a+s.dur,0)/60/filtered.length)+'分':'-';
+} // 'today' | 'week' | 'month'
+
+function setChartPeriod(p){
+  chartPeriod=p;
+  ['today','week','month'].forEach(k=>{
+    const btn=document.getElementById('cp-'+k);
+    if(btn)btn.classList.toggle('active',k===p);
+  });
+  renderStats();
+}
+
+function renderStats(){
+  // 統計ページが表示されていない場合は何もしない
+  const svMin=document.getElementById('sv-min');
+  if(!svMin)return;
+  const tot2=hist.reduce((a,s)=>a+s.dur,0);
+  svMin.textContent=Math.round(tot2/60);
+  document.getElementById('sv-cnt').textContent=hist.length;
+  const avgEl=document.getElementById('sv-avg');if(avgEl)avgEl.textContent=0;
+  updateAvgStat();
+  document.getElementById('sv-today').textContent=hist.filter(s=>new Date(s.ts).toDateString()===new Date().toDateString()).length;
+
+  const now=new Date();
+  const titleEl=document.getElementById('chart-title');
+  if(titleEl)titleEl.textContent=t('cp_title_'+chartPeriod);
+
+  if(chartPeriod==='today'){
+    const hours=Array(24).fill(0);
+    hist.forEach(s=>{
+      const sd=new Date(s.ts);
+      if(sd.toDateString()===now.toDateString())hours[sd.getHours()]+=Math.round(s.dur/60);
+    });
+    const mx=Math.max(...hours,1);
+    const wc=document.getElementById('wchart');
+    if(wc)wc.innerHTML=hours.map((v,i)=>{
+      const isNow=i===now.getHours();
+      return`<div class="bw"><div class="bar${isNow?' today':''}" style="height:${Math.round((v/mx)*72)+3}px" title="${v}分"></div><div class="blbl">${i%3===0?i+'h':''}</div></div>`;
+    }).join('');
+  } else if(chartPeriod==='week'){
+    const days=lang==='zh'?['日','一','二','三','四','五','六']:['日','月','火','水','木','金','土'];
+    const wd=Array(7).fill(0);
+    hist.forEach(s=>{const diff=Math.floor((now-new Date(s.ts))/86400000);if(diff<7)wd[6-diff]+=Math.round(s.dur/60);});
+    const mx=Math.max(...wd,1);
+    const wc=document.getElementById('wchart');
+    if(wc)wc.innerHTML=wd.map((v,i)=>{
+      const di=(now.getDay()-6+i+7)%7;
+      return`<div class="bw"><div class="bar${i===6?' today':''}" style="height:${Math.round((v/mx)*72)+3}px" title="${v}分"></div><div class="blbl">${days[di]}</div></div>`;
+    }).join('');
+  } else {
+    const dim=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+    const md=Array(dim).fill(0);
+    hist.forEach(s=>{
+      const sd=new Date(s.ts);
+      if(sd.getFullYear()===now.getFullYear()&&sd.getMonth()===now.getMonth())
+        md[sd.getDate()-1]+=Math.round(s.dur/60);
+    });
+    const mx=Math.max(...md,1);
+    const wc=document.getElementById('wchart');
+    if(wc)wc.innerHTML=md.map((v,i)=>{
+      const day=i+1;
+      const isToday=day===now.getDate();
+      const showLbl=day===1||day%5===0||day===dim;
+      return`<div class="bw"><div class="bar${isToday?' today':''}" style="height:${Math.round((v/mx)*72)+3}px" title="${day}日 ${v}分"></div><div class="blbl">${showLbl?day:''}</div></div>`;
+    }).join('');
+  }
+}
+// 金色記念日管理
+let goldDays=JSON.parse(localStorage.getItem('pomo-gold')||'{}');
+function saveGold(){localStorage.setItem('pomo-gold',JSON.stringify(goldDays));}
+function goldKey(y,m,d){return`${y}-${m}-${d}`;}
+
 function getCD(){const d={};hist.forEach(s=>{const sd=new Date(s.ts);const k=sd.getFullYear()+'-'+(sd.getMonth()+1)+'-'+sd.getDate();d[k]=(d[k]||0)+Math.round(s.dur/60);});return d;}
-function calCol(m){if(m===0)return'#F1F5F9';if(m<25)return'#BFDBFE';if(m<50)return'#93C5FD';if(m<100)return'#3B82F6';return'#1D4ED8';}
+// 新基準: 0=白, 1~30=薄青, 31~60=青, 61~90=中青, 91+=濃青
+function calCol(m,isGold){
+  if(isGold)return'#D4A017'; // 金色
+  if(m===0)return'#F1F5F9';
+  if(m<=30)return'#BFDBFE';
+  if(m<=60)return'#93C5FD';
+  if(m<=90)return'#3B82F6';
+  return'#1D4ED8';
+}
+function calTextCol(m,isGold){
+  if(isGold)return'white';
+  if(m>=31)return'white';
+  return'#64748B';
+}
 function renderCal(){
   const data=getCD(),now=new Date();
   const fd=new Date(calY,calM,1).getDay(),dim=new Date(calY,calM+1,0).getDate();
@@ -798,7 +1016,16 @@ function renderCal(){
   const days=lang==='zh'?['日','一','二','三','四','五','六']:['日','月','火','水','木','金','土'];
   let h=days.map(d=>`<div class="cal-day-label">${d}</div>`).join('');
   for(let i=0;i<fd;i++)h+=`<div class="cal-day" style="background:transparent"></div>`;
-  for(let d=1;d<=dim;d++){const k=calY+'-'+(calM+1)+'-'+d,mins=data[k]||0;const isT=now.getFullYear()===calY&&now.getMonth()===calM&&now.getDate()===d;const bg=calCol(mins),tc=mins>=50?'white':'#64748B',cur=mins>0?'cursor:pointer':'';h+=`<div class="cal-day${isT?' today-cal':''}" style="background:${bg};color:${tc};${cur}" onclick="openDD(${calY},${calM+1},${d})">${d}</div>`;}
+  for(let d=1;d<=dim;d++){
+    const k=calY+'-'+(calM+1)+'-'+d;
+    const mins=data[k]||0;
+    const isGold=!!goldDays[k];
+    const isT=now.getFullYear()===calY&&now.getMonth()===calM&&now.getDate()===d;
+    const bg=calCol(mins,isGold);
+    const tc=calTextCol(mins,isGold);
+    const cur=mins>0?'cursor:pointer':'';
+    h+=`<div class="cal-day${isT?' today-cal':''}" style="background:${bg};color:${tc};${cur}" onclick="openDD(${calY},${calM+1},${d})">${d}${isGold?'⭐':''}</div>`;
+  }
   document.getElementById('cal-grid').innerHTML=h;
 }
 function calPrev(){if(calM===0){calM=11;calY--;}else calM--;renderCal();}
@@ -807,28 +1034,111 @@ function openDD(y,m,d){
   const ss=hist.filter(s=>{const sd=new Date(s.ts);return sd.getFullYear()===y&&(sd.getMonth()+1)===m&&sd.getDate()===d;}).sort((a,b)=>a.ts-b.ts);
   const total=Math.round(ss.reduce((a,s)=>a+s.dur,0)/60);
   const lc=lang==='zh'?'zh-CN':'ja-JP',mu=t('min_unit');
+  const gk=goldKey(y,m,d);
+  const isGold=!!goldDays[gk];
+  const canGold=total>=91;
+  const goldBtn=canGold
+    ?`<button onclick="toggleGold('${gk}')" style="margin-top:12px;width:100%;padding:9px;border-radius:8px;border:none;background:${isGold?'#94A3B8':'#D4A017'};color:white;font-size:13px;font-weight:600;cursor:pointer">
+        ${isGold?(lang==='zh'?'✕ 取消金色':'✕ 金色を解除'):(lang==='zh'?'⭐ 设为金色':'⭐ 金色にする')}
+      </button>`
+    :'';
   const bg=document.createElement('div');bg.className='day-modal-bg';
-  bg.innerHTML=`<div class="day-modal"><div class="day-modal-header"><div class="day-modal-title">${y}年${m}月${d}日</div><button class="day-modal-close" onclick="this.closest('.day-modal-bg').remove()">&#10005;</button></div><div class="day-modal-summary"><div class="day-modal-stat"><div class="day-modal-stat-val">${total}${mu}</div><div class="day-modal-stat-lbl">${lang==='zh'?'总时间':'合計時間'}</div></div><div class="day-modal-stat"><div class="day-modal-stat-val">${ss.length}${lang==='zh'?'次':'回'}</div><div class="day-modal-stat-lbl">${lang==='zh'?'场次':'セッション数'}</div></div></div>${ss.length===0?`<div class="day-modal-empty">${lang==='zh'?'该日无记录':'この日の記録はありません'}</div>`:`<div class="day-modal-list">${ss.map((s,i)=>`<div class="day-modal-item"><div class="dm-idx">${i+1}</div><div><div class="dm-dur">${Math.round(s.dur/60)}${mu}</div><div class="dm-time">${new Date(s.ts).toLocaleTimeString(lc,{hour:'2-digit',minute:'2-digit'})}</div></div></div>`).join('')}</div>`}</div>`;
+  bg.innerHTML=`<div class="day-modal"><div class="day-modal-header"><div class="day-modal-title">${y}年${m}月${d}日${isGold?' ⭐':''}</div><button class="day-modal-close" onclick="this.closest('.day-modal-bg').remove()">&#10005;</button></div><div class="day-modal-summary"><div class="day-modal-stat"><div class="day-modal-stat-val">${total}${mu}</div><div class="day-modal-stat-lbl">${lang==='zh'?'总时间':'合計時間'}</div></div><div class="day-modal-stat"><div class="day-modal-stat-val">${ss.length}${lang==='zh'?'次':'回'}</div><div class="day-modal-stat-lbl">${lang==='zh'?'场次':'セッション数'}</div></div></div>${ss.length===0?`<div class="day-modal-empty">${lang==='zh'?'该日无记录':'この日の記録はありません'}</div>`:`<div class="day-modal-list">${ss.map((s,i)=>`<div class="day-modal-item"><div class="dm-idx">${i+1}</div><div><div class="dm-dur">${Math.round(s.dur/60)}${mu}</div><div class="dm-time">${new Date(s.ts).toLocaleTimeString(lc,{hour:'2-digit',minute:'2-digit'})}</div></div></div>`).join('')}</div>`}${goldBtn}</div>`;
   bg.addEventListener('click',e=>{if(e.target===bg)bg.remove();});document.body.appendChild(bg);
+}
+function toggleGold(gk){
+  if(goldDays[gk])delete goldDays[gk];else goldDays[gk]=true;
+  saveGold();
+  document.querySelector('.day-modal-bg')?.remove();
+  renderCal();
 }
 
 // ── GOALS ──
 function goalDoneMin(g){
-  return hist.filter(s=>s.ts>=(g.createdAt||0)).reduce((a,s)=>a+Math.round(s.dur/60),0);
+  // goalIdが付いているレコードはそれを優先、ついていない旧レコードはcreatedAt以降を全件カウント
+  return hist.filter(s=>s.ts>=(g.createdAt||0)&&(s.goalId===String(g.id)||!s.goalId))
+    .reduce((a,s)=>a+Math.round(s.dur/60),0);
 }
+function miniDoneMin(g,sgId){
+  // miniIdが一致するレコードのみカウント（miniIdなし旧レコードは除外）
+  return hist.filter(s=>s.ts>=(g.createdAt||0)&&s.goalId===String(g.id)&&s.miniId===String(sgId))
+    .reduce((a,s)=>a+Math.round(s.dur/60),0);
+}
+// goalhours: useMini=true の場合はミニ目標合計から算出
+function goalTotalMin(g){
+  if(g.useMini&&g.subgoals&&g.subgoals.length)
+    return g.subgoals.reduce((a,s)=>a+s.hours*60,0);
+  return(g.hours||0)*60;
+}
+
+// フォーム用一時ミニ目標リスト
+let formMinis=[];
+
+function toggleMiniMode(){
+  const on=document.getElementById('g-use-mini').checked;
+  document.getElementById('g-hours-row').style.display=on?'none':'flex';
+  document.getElementById('g-mini-rows').style.display=on?'block':'none';
+  if(!on){formMinis=[];renderFormMinis();}
+}
+function addFormMini(){
+  const name=(document.getElementById('g-mini-name-txt').value||'').trim();
+  const h=parseInt(document.getElementById('g-mini-h').value)||0;
+  if(!name||h<1){toast(lang==='zh'?'请填写名称和时间':'名前と時間を入力してください');return;}
+  formMinis.push({id:Date.now()+Math.random(),name,hours:h});
+  document.getElementById('g-mini-name-txt').value='';
+  document.getElementById('g-mini-h').value='';
+  renderFormMinis();
+}
+function delFormMini(id){
+  formMinis=formMinis.filter(m=>String(m.id)!==String(id));
+  renderFormMinis();
+}
+function renderFormMinis(){
+  const totalH=formMinis.reduce((a,m)=>a+m.hours,0);
+  document.getElementById('g-mini-list').innerHTML=formMinis.map(m=>
+    `<div style="display:flex;align-items:center;gap:6px;padding:6px 8px;background:var(--bg);border:1px solid var(--border);border-radius:7px">
+      <span style="flex:1;font-size:12px;color:var(--text)">${esc(m.name)}</span>
+      <span style="font-size:11px;color:var(--text2)">${m.hours}h</span>
+      <button class="gm-mini-del" onclick="delFormMini('${m.id}')">✕</button>
+    </div>`
+  ).join('');
+  const tot=document.getElementById('g-mini-total');
+  if(tot)tot.textContent=formMinis.length
+    ?(lang==='zh'?`合计目标时间：${totalH}小时`:`合計目標時間：${totalH}時間`):'';
+}
+
 function addGoal(){
   const subj=(document.getElementById('g-subj').value||'').trim();
   const days=parseInt(document.getElementById('g-days').value)||0;
-  const hours=parseInt(document.getElementById('g-hours').value)||0;
-  if(!subj||hours<1){toast(lang==='zh'?'请填写科目和目标时间':'科目と目標時間を入力してください');return;}
+  const useMini=document.getElementById('g-use-mini').checked;
+
+  if(!subj){toast(lang==='zh'?'请输入科目名称':'科目名を入力してください');return;}
+
+  let hours=0;
+  let subgoals=[];
+  if(useMini){
+    if(formMinis.length<1){toast(lang==='zh'?'请添加至少一个子目标':'ミニ目標を1つ以上追加してください');return;}
+    subgoals=formMinis.map(m=>({id:m.id,name:m.name,hours:m.hours}));
+    hours=subgoals.reduce((a,s)=>a+s.hours,0); // 合計を自動計算
+  }else{
+    hours=parseInt(document.getElementById('g-hours').value)||0;
+    if(hours<1){toast(lang==='zh'?'请输入目标时间':'目標時間を入力してください');return;}
+  }
+
   snapGoal(lang==='zh'?'已添加目标':'目標を追加しました');
-  const g={id:Date.now(),subject:subj,days,hours,createdAt:Date.now()};
+  const g={id:Date.now(),subject:subj,days,hours,useMini,subgoals,createdAt:Date.now()};
   goals.unshift(g);
   if(!activeGoalId)activeGoalId=String(g.id);
   sg();
+
+  // フォームリセット
   document.getElementById('g-subj').value='';
   document.getElementById('g-days').value='';
   document.getElementById('g-hours').value='';
+  document.getElementById('g-use-mini').checked=false;
+  formMinis=[];
+  toggleMiniMode();
+
   renderGoals();updateTGB();
 }
 function delGoal(id){
@@ -838,34 +1148,51 @@ function delGoal(id){
   sg();renderGoals();updateTGB();
 }
 function setActiveGoal(id){
-  activeGoalId=String(id);sg();renderGoals();updateTGB();
+  activeGoalId=String(id);activeMiniId='';sg();renderGoals();updateTGB();
+}
+function setActiveMini(id){
+  activeMiniId=String(id);sg();updateTGB();
 }
 function renderGoals(){
   const subj=document.getElementById('g-subj');
-  if(subj&&!subj.placeholder)subj.placeholder=t('goal_subj_ph');
+  if(subj)subj.placeholder=t('goal_subj_ph');
   const el=document.getElementById('goal-list');
   if(!el)return;
   if(!goals.length){el.innerHTML=`<div class="goal-empty">${t('goal_empty')}</div>`;updateTGB();return;}
   el.innerHTML=goals.map(g=>{
     const doneMin=goalDoneMin(g);
-    const totalMin=g.hours*60;
+    const totalMin=goalTotalMin(g);
+    const totalH=Math.round(totalMin/60);
     const pct=Math.min(doneMin/totalMin*100,100).toFixed(1);
     const doneH=(doneMin/60).toFixed(1);
     const remH=Math.max(0,(totalMin-doneMin)/60).toFixed(1);
     const done=doneMin>=totalMin;
     const isAct=String(g.id)===String(activeGoalId);
-    const progTxt=t('goal_progress').replace('{done}',doneH).replace('{total}',g.hours);
+    const progTxt=t('goal_progress').replace('{done}',doneH).replace('{total}',totalH);
     const remTxt=done?t('goal_done_badge'):t('tgb_remain').replace('{h}',remH);
-    const metaParts=[];
-    if(g.days)metaParts.push(g.days+(lang==='zh'?t('goal_day_unit'):t('goal_days_unit')));
-    metaParts.push(g.hours+(lang==='zh'?t('goal_hours_unit'):t('goal_hours_unit'))+(lang==='zh'?'':'目標'));
+    const miniCount=(g.subgoals||[]).length;
+
+    // アクティブカードにはインラインでグラフ表示
+    const inlineChart=isAct?`
+      <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:12px">
+        <div class="gm-chart-toggle" style="margin-bottom:10px">
+          <button class="gm-chart-btn${gmChartType==='bar'?' active':''}" onclick="event.stopPropagation();switchInlineChart('bar','${g.id}')">${t('gm_chart_bar')}</button>
+          <button class="gm-chart-btn${gmChartType==='pie'?' active':''}" onclick="event.stopPropagation();switchInlineChart('pie','${g.id}')">${t('gm_chart_pie')}</button>
+        </div>
+        <div id="inline-chart-${g.id}">
+          ${gmChartType==='bar'?buildBarChart(g,doneMin):buildPieChart(g,doneMin)}
+        </div>
+        <button class="goal-card-detail-btn" style="margin-top:10px" onclick="event.stopPropagation();openGoalModal('${g.id}')">${t('gm_detail')}</button>
+      </div>`:'';
+
     return`<div class="goal-card${isAct?' active-goal':''}" onclick="setActiveGoal('${g.id}')">
       <div class="goal-card-top">
         <div class="goal-card-subject">${esc(g.subject)}</div>
         ${isAct?`<span class="goal-active-badge">${t('goal_active_now')}</span>`:''}
+        ${!isAct?`<button class="goal-card-detail-btn" onclick="event.stopPropagation();openGoalModal('${g.id}')">${t('gm_detail')}</button>`:''}
         <button class="goal-card-del" onclick="event.stopPropagation();delGoal('${g.id}')">✕</button>
       </div>
-      <div class="goal-card-meta">${metaParts.join(' · ')}</div>
+      <div class="goal-card-meta">${g.days?g.days+t('goal_days_unit')+' · ':''} ${totalH}${t('goal_hours_unit')}${miniCount?` · ${t('gm_mini_title')}${miniCount}${lang==='zh'?'个':'件'}`:''}</div>
       <div class="goal-prog-wrap">
         <div class="goal-prog-bar"><div class="goal-prog-fill" style="width:${pct}%"></div></div>
         <div class="goal-prog-labels">
@@ -873,9 +1200,194 @@ function renderGoals(){
           <span class="goal-prog-remain">${remTxt}</span>
         </div>
       </div>
+      ${inlineChart}
     </div>`;
   }).join('');
   updateTGB();
+}
+
+// ── グラフ共通ビルダー ──
+const CHART_COLORS=['#3B82F6','#10B981','#F59E0B','#EF4444','#8B5CF6','#EC4899','#06B6D4','#84CC16'];
+
+function buildChartItems(g,doneMin){
+  const subgoals=g.subgoals||[];
+  if(subgoals.length===0){
+    return[{name:g.subject,hours:Math.round(goalTotalMin(g)/60),doneMin}];
+  }
+  return subgoals.map(sg=>({name:sg.name,hours:sg.hours,doneMin:miniDoneMin(g,sg.id)}));
+}
+
+function buildBarChart(g,doneMin){
+  const items=buildChartItems(g,doneMin);
+  return`<div class="gm-bar-chart">${items.map((it,i)=>{
+    const pct=Math.min(it.doneMin/(it.hours*60)*100,100);
+    const doneH=(it.doneMin/60).toFixed(1);
+    return`<div class="gm-bar-row">
+      <div class="gm-bar-label" title="${esc(it.name)}">${esc(it.name)}</div>
+      <div class="gm-bar-track">
+        <div class="gm-bar-fill" style="width:${pct}%;background:${CHART_COLORS[i%CHART_COLORS.length]}"></div>
+        <div class="gm-bar-val">${doneH}/${it.hours}h</div>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function buildPieChart(g,doneMin){
+  const items=buildChartItems(g,doneMin);
+  const size=140,cx=70,cy=70,r=55;
+  let startAngle=-Math.PI/2;
+  const segments=[];
+  const total2=items.reduce((a,it)=>a+it.hours,0)||1;
+  items.forEach((it,i)=>{
+    const angle=(it.hours/total2)*2*Math.PI;
+    const endAngle=startAngle+angle;
+    const x1=cx+r*Math.cos(startAngle),y1=cy+r*Math.sin(startAngle);
+    const x2=cx+r*Math.cos(endAngle),y2=cy+r*Math.sin(endAngle);
+    const large=angle>Math.PI?1:0;
+    segments.push(`<path d="M${cx},${cy} L${x1.toFixed(2)},${y1.toFixed(2)} A${r},${r},0,${large},1,${x2.toFixed(2)},${y2.toFixed(2)} Z" fill="${CHART_COLORS[i%CHART_COLORS.length]}22" stroke="white" stroke-width="1"/>`);
+    if(it.doneMin>0){
+      const doneAngle=startAngle+(it.doneMin/(it.hours*60))*angle;
+      const dx2=cx+r*Math.cos(doneAngle),dy2=cy+r*Math.sin(doneAngle);
+      const dlarge=doneAngle-startAngle>Math.PI?1:0;
+      segments.push(`<path d="M${cx},${cy} L${x1.toFixed(2)},${y1.toFixed(2)} A${r},${r},0,${dlarge},1,${dx2.toFixed(2)},${dy2.toFixed(2)} Z" fill="${CHART_COLORS[i%CHART_COLORS.length]}" stroke="white" stroke-width="1"/>`);
+    }
+    startAngle=endAngle;
+  });
+  const legend=items.map((it,i)=>{
+    const pct2=Math.min(it.doneMin/(it.hours*60)*100,100).toFixed(0);
+    return`<div class="gm-pie-legend-item"><div class="gm-pie-legend-dot" style="background:${CHART_COLORS[i%CHART_COLORS.length]}"></div><span>${esc(it.name)} ${pct2}%</span></div>`;
+  }).join('');
+  return`<div class="gm-pie-wrap">
+    <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${segments.join('')}</svg>
+    <div class="gm-pie-legend">${legend}</div>
+  </div>`;
+}
+
+function switchInlineChart(type,gid){
+  gmChartType=type;
+  const g=goals.find(x=>String(x.id)===String(gid));
+  if(!g)return;
+  const doneMin=goalDoneMin(g);
+  const el=document.getElementById('inline-chart-'+gid);
+  if(el)el.innerHTML=type==='bar'?buildBarChart(g,doneMin):buildPieChart(g,doneMin);
+  // ボタン状態更新
+  renderGoals();
+}
+
+// ── GOAL MODAL ──
+let gmChartType='bar'; // 'bar' | 'pie'
+let gmCurrentId=null;
+
+function openGoalModal(id){
+  gmCurrentId=id;
+  const g=goals.find(x=>String(x.id)===String(id));
+  if(!g)return;
+  document.getElementById('gm-title').textContent=esc(g.subject);
+  document.getElementById('goal-modal-bg').style.display='flex';
+  renderGoalModal(g);
+}
+function closeGoalModal(){
+  document.getElementById('goal-modal-bg').style.display='none';
+  gmCurrentId=null;
+}
+function renderGoalModal(g){
+  if(typeof g==='string')g=goals.find(x=>String(x.id)===String(g));
+  if(!g)return;
+  const doneMin=goalDoneMin(g);
+  const subgoals=g.subgoals||[];
+
+  const miniList=subgoals.length
+    ?subgoals.map((sg,i)=>{
+      const sgDone=miniDoneMin(g,sg.id);
+      const sgPct=Math.min(sgDone/(sg.hours*60)*100,100).toFixed(0);
+      const sgDoneH=(sgDone/60).toFixed(1);
+      return`<div class="gm-mini-item">
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;gap:6px">
+            <div class="gm-mini-name">${esc(sg.name)}</div>
+            <span class="gm-mini-prog">${sgDoneH}/${sg.hours}h</span>
+            <button class="gm-mini-del" onclick="delSubgoal('${g.id}','${sg.id}')">✕</button>
+          </div>
+          <div class="gm-mini-bar"><div class="gm-mini-bar-fill" style="width:${sgPct}%;background:${CHART_COLORS[(i+1)%CHART_COLORS.length]}"></div></div>
+        </div>
+      </div>`;
+    }).join('')
+    :`<div style="font-size:12px;color:var(--text3);padding:8px 0">${t('gm_mini_empty')}</div>`;
+
+  document.getElementById('gm-body').innerHTML=`
+    <div class="undo-bar" id="sg-undo-bar" style="display:none"><span id="sg-undo-msg"></span><button class="undo-btn" id="sg-undo-btn" onclick="undoSubgoal('${g.id}')">↩ 元に戻す</button></div>
+    <div class="gm-chart-toggle">
+      <button class="gm-chart-btn${gmChartType==='bar'?' active':''}" onclick="switchChart('bar')">${t('gm_chart_bar')}</button>
+      <button class="gm-chart-btn${gmChartType==='pie'?' active':''}" onclick="switchChart('pie')">${t('gm_chart_pie')}</button>
+    </div>
+    <div class="gm-chart-wrap" id="gm-chart">
+      ${gmChartType==='bar'?buildBarChart(g,doneMin):buildPieChart(g,doneMin)}
+    </div>
+    <div style="font-size:11px;font-weight:600;color:var(--text3);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px">${t('gm_mini_title')}</div>
+    <div class="gm-mini-list" id="gm-mini-list">${miniList}</div>
+    <div class="gm-mini-form">
+      <div class="gm-mini-form-title">${t('gm_mini_title')}を追加</div>
+      <div style="display:flex;gap:6px;margin-bottom:6px">
+        <input class="goal-input" id="sg-name" type="text" maxlength="30" placeholder="${t('gm_mini_ph')}" style="flex:1">
+      </div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <input class="goal-input" id="sg-hours" type="number" min="1" max="9999" placeholder="10" style="width:70px">
+        <span class="goal-unit">${t('goal_hours_unit')}</span>
+        <button class="goal-add-btn" style="flex:1;margin-top:0;padding:7px" onclick="addSubgoal('${g.id}')">${t('gm_mini_add')}</button>
+      </div>
+    </div>`;
+}
+
+function switchChart(type){
+  gmChartType=type;
+  if(gmCurrentId){
+    const g=goals.find(x=>String(x.id)===String(gmCurrentId));
+    if(g)renderGoalModal(g);
+  }
+}
+let sgSnap=null,sgUndoTmr=null,sgSnapGid=null;
+
+function snapSubgoal(gid){
+  const g=goals.find(x=>String(x.id)===String(gid));
+  if(!g)return;
+  sgSnap=JSON.stringify(g.subgoals||[]);
+  sgSnapGid=gid;
+  clearTimeout(sgUndoTmr);
+  sgUndoTmr=setTimeout(()=>{sgSnap=null;showSgUndoBar(false);},8000);
+  const msg=document.getElementById('sg-undo-msg');
+  if(msg)msg.textContent=lang==='zh'?'已删除子目标':'ミニ目標を削除しました';
+  const btn=document.getElementById('sg-undo-btn');
+  if(btn)btn.textContent='↩ '+(lang==='zh'?'撤销':'元に戻す');
+  showSgUndoBar(true);
+}
+function undoSubgoal(gid){
+  if(!sgSnap)return;
+  const g=goals.find(x=>String(x.id)===String(gid));
+  if(!g)return;
+  g.subgoals=JSON.parse(sgSnap);
+  sgSnap=null;clearTimeout(sgUndoTmr);
+  sg();showSgUndoBar(false);renderGoalModal(g);renderGoals();
+}
+function showSgUndoBar(v){
+  const b=document.getElementById('sg-undo-bar');if(b)b.style.display=v?'flex':'none';
+}
+
+function addSubgoal(gid){
+  const g=goals.find(x=>String(x.id)===String(gid));
+  if(!g)return;
+  const name=(document.getElementById('sg-name').value||'').trim();
+  const hours=parseInt(document.getElementById('sg-hours').value)||0;
+  if(!name||hours<1){toast(lang==='zh'?'请填写名称和时间':'名前と時間を入力してください');return;}
+  if(!g.subgoals)g.subgoals=[];
+  g.subgoals.push({id:Date.now(),name,hours});
+  sg();renderGoalModal(g);renderGoals();
+}
+function delSubgoal(gid,sgid){
+  const g=goals.find(x=>String(x.id)===String(gid));
+  if(!g||!g.subgoals)return;
+  snapSubgoal(gid);
+  g.subgoals=g.subgoals.filter(s=>String(s.id)!==String(sgid));
+  sg();renderGoalModal(g);renderGoals();
 }
 function updateTGB(){
   const bar=document.getElementById('tgb');
@@ -885,20 +1397,44 @@ function updateTGB(){
   bar.style.display='block';
   sel.innerHTML=goals.map(g=>`<option value="${g.id}"${String(g.id)===String(activeGoalId)?' selected':''}>${esc(g.subject)}</option>`).join('');
   const g=goals.find(x=>String(x.id)===String(activeGoalId));
+
+  // ミニ目標セレクタ
+  const miniRow=document.getElementById('tgb-mini-row');
+  const miniSel=document.getElementById('tgb-mini-sel');
+  const subgoals=g&&g.subgoals&&g.subgoals.length?g.subgoals:[];
+  if(miniRow&&miniSel){
+    if(subgoals.length){
+      miniRow.style.display='flex';
+      // activeMiniIdが未設定か存在しないミニ目標なら最初を選択
+      if(!activeMiniId||!subgoals.find(s=>String(s.id)===String(activeMiniId))){
+        activeMiniId=String(subgoals[0].id);
+      }
+      miniSel.innerHTML=
+        subgoals.map(s=>`<option value="${s.id}"${String(s.id)===String(activeMiniId)?' selected':''}>${esc(s.name)}</option>`).join('');
+    }else{
+      miniRow.style.display='none';
+      activeMiniId='';
+    }
+  }
+
   if(!g){
     document.getElementById('tgb-remain').textContent=t('tgb_none');
     document.getElementById('tgb-sub').textContent='';
     document.getElementById('tgb-fill').style.width='0%';
     return;
   }
-  const doneMin=goalDoneMin(g);
-  const totalMin=g.hours*60;
-  const pct=Math.min(doneMin/totalMin*100,100).toFixed(1);
-  const doneH=(doneMin/60).toFixed(1);
-  const remH=Math.max(0,(totalMin-doneMin)/60).toFixed(1);
-  const done=doneMin>=totalMin;
+  const mini=activeMiniId?subgoals.find(s=>String(s.id)===String(activeMiniId)):null;
+  const targetMin=mini?mini.hours*60:goalTotalMin(g);
+  const targetHours=Math.round(targetMin/60);
+  const rawDoneMin=mini?miniDoneMin(g,mini.id):goalDoneMin(g);
+  const displayDoneMin=Math.min(rawDoneMin,targetMin);
+  const pct=Math.min(displayDoneMin/targetMin*100,100).toFixed(1);
+  const doneH=(displayDoneMin/60).toFixed(1);
+  const remH=Math.max(0,(targetMin-displayDoneMin)/60).toFixed(1);
+  const done=displayDoneMin>=targetMin;
+  const lbl=mini?esc(mini.name):esc(g.subject);
   document.getElementById('tgb-remain').textContent=done?t('tgb_done'):t('tgb_remain').replace('{h}',remH);
-  document.getElementById('tgb-sub').textContent=t('goal_progress').replace('{done}',doneH).replace('{total}',g.hours);
+  document.getElementById('tgb-sub').textContent=lbl+'　'+t('goal_progress').replace('{done}',doneH).replace('{total}',targetHours);
   document.getElementById('tgb-fill').style.width=pct+'%';
 }
 
@@ -986,7 +1522,16 @@ function applyI18n(){
   drawT();renderGoals();updateTGB();
 }
 
-// TOAST
+// ── TEST HELPERS ──
+function addTestRecord(){
+  hist.unshift({ts:Date.now(),dur:5520,_test:true}); // 92分
+  sp();toast('テスト記録を追加しました（92分）');
+}
+function removeTestRecord(){
+  const before=hist.length;
+  hist=hist.filter(s=>!s._test);
+  sp();toast(before-hist.length>0?'テスト記録を削除しました':'テスト記録はありません');
+}
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2500);}
 
 // ── INIT ──
@@ -996,6 +1541,7 @@ applyI18n();
 setMode(timerMode);
 drawT();
 updateTGB();
+setAvgPeriod(avgPeriod);
 </script>
 </body>
 </html>
