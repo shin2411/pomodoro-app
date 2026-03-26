@@ -608,30 +608,30 @@ const I18N={
 // ── COLOR THEMES ──
 const THEMES=[
   {id:'blue',    name:{ja:'ブルー',      zh:'蓝色'},   color:'#2563EB',price:0,dots:['#2563EB','#60A5FA','#BFDBFE']},
-  {id:'pink',    name:{ja:'ピンク',      zh:'粉色'},   color:'#EC4899',price:0,dots:['#EC4899','#F9A8D4','#FBCFE8']},
-  {id:'fuchsia', name:{ja:'フューシャ',  zh:'洋红'},   color:'#C026D3',price:0,dots:['#C026D3','#E879F9','#F0ABFC']},
-  {id:'red',     name:{ja:'レッド',      zh:'红色'},   color:'#DC2626',price:0,dots:['#DC2626','#F87171','#FECACA']},
-  {id:'orange',  name:{ja:'オレンジ',    zh:'橙色'},   color:'#EA580C',price:0,dots:['#EA580C','#FB923C','#FED7AA']},
-  {id:'amber',   name:{ja:'アンバー',    zh:'琥珀'},   color:'#D97706',price:0,dots:['#D97706','#FBBF24','#FDE68A']},
-  {id:'yellow',  name:{ja:'イエロー',    zh:'黄色'},   color:'#CA8A04',price:0,dots:['#CA8A04','#EAB308','#FEF08A']},
-  {id:'lime',    name:{ja:'ライム',      zh:'黄绿'},   color:'#65A30D',price:0,dots:['#65A30D','#A3E635','#D9F99D']},
-  {id:'emerald', name:{ja:'エメラルド',  zh:'翡翠'},   color:'#059669',price:0,dots:['#059669','#34D399','#A7F3D0']},
-  {id:'teal',    name:{ja:'ティール',    zh:'青绿'},   color:'#0D9488',price:0,dots:['#0D9488','#2DD4BF','#99F6E4']},
-  {id:'cyan',    name:{ja:'シアン',      zh:'青色'},   color:'#0891B2',price:0,dots:['#0891B2','#22D3EE','#A5F3FC']},
-  {id:'sky',     name:{ja:'スカイ',      zh:'天蓝'},   color:'#0EA5E9',price:0,dots:['#0EA5E9','#7DD3FC','#BAE6FD']},
-  {id:'indigo',  name:{ja:'インディゴ',  zh:'靛蓝'},   color:'#4F46E5',price:0,dots:['#4F46E5','#818CF8','#C7D2FE']},
-  {id:'violet',  name:{ja:'バイオレット',zh:'紫色'},   color:'#7C3AED',price:0,dots:['#7C3AED','#A78BFA','#DDD6FE']},
-  {id:'slate',   name:{ja:'スレート',    zh:'石板灰'}, color:'#475569',price:0,dots:['#475569','#94A3B8','#CBD5E1']},
-  {id:'brown',   name:{ja:'ブラウン',    zh:'棕色'},   color:'#92400E',price:0,dots:['#92400E','#B45309','#FDE68A']},
+  {id:'pink',    name:{ja:'ピンク',      zh:'粉色'},   color:'#EC4899',price:10,dots:['#EC4899','#F9A8D4','#FBCFE8']},
+  {id:'fuchsia', name:{ja:'フューシャ',  zh:'洋红'},   color:'#C026D3',price:20,dots:['#C026D3','#E879F9','#F0ABFC']},
+  {id:'red',     name:{ja:'レッド',      zh:'红色'},   color:'#DC2626',price:20,dots:['#DC2626','#F87171','#FECACA']},
+  {id:'orange',  name:{ja:'オレンジ',    zh:'橙色'},   color:'#EA580C',price:30,dots:['#EA580C','#FB923C','#FED7AA']},
+  {id:'amber',   name:{ja:'アンバー',    zh:'琥珀'},   color:'#D97706',price:30,dots:['#D97706','#FBBF24','#FDE68A']},
+  {id:'yellow',  name:{ja:'イエロー',    zh:'黄色'},   color:'#CA8A04',price:50,dots:['#CA8A04','#EAB308','#FEF08A']},
+  {id:'lime',    name:{ja:'ライム',      zh:'黄绿'},   color:'#65A30D',price:50,dots:['#65A30D','#A3E635','#D9F99D']},
+  {id:'emerald', name:{ja:'エメラルド',  zh:'翡翠'},   color:'#059669',price:100,dots:['#059669','#34D399','#A7F3D0']},
+  {id:'teal',    name:{ja:'ティール',    zh:'青绿'},   color:'#0D9488',price:100,dots:['#0D9488','#2DD4BF','#99F6E4']},
+  {id:'cyan',    name:{ja:'シアン',      zh:'青色'},   color:'#0891B2',price:200,dots:['#0891B2','#22D3EE','#A5F3FC']},
+  {id:'sky',     name:{ja:'スカイ',      zh:'天蓝'},   color:'#0EA5E9',price:200,dots:['#0EA5E9','#7DD3FC','#BAE6FD']},
+  {id:'indigo',  name:{ja:'インディゴ',  zh:'靛蓝'},   color:'#4F46E5',price:300,dots:['#4F46E5','#818CF8','#C7D2FE']},
+  {id:'violet',  name:{ja:'バイオレット',zh:'紫色'},   color:'#7C3AED',price:300,dots:['#7C3AED','#A78BFA','#DDD6FE']},
+  {id:'slate',   name:{ja:'スレート',    zh:'石板灰'}, color:'#475569',price:500,dots:['#475569','#94A3B8','#CBD5E1']},
+  {id:'brown',   name:{ja:'ブラウン',    zh:'棕色'},   color:'#92400E',price:500,dots:['#92400E','#B45309','#FDE68A']},
 ];
 
 // ── SKINS ──
 const SKINS=[
   {id:'default', name:{ja:'デフォルト',zh:'默认'},   icon:'⬜',price:0,desc:{ja:'シンプルな白',zh:'简洁白色'}},
-  {id:'cute',    name:{ja:'かわいい',zh:'可爱'},      icon:'🌸',price:0,desc:{ja:'ピンク・丸みがかわいい',zh:'粉嫩可爱圆润'}},
-  {id:'cool',    name:{ja:'クール',zh:'冷酷'},        icon:'🌌',price:0,desc:{ja:'ダークブルーで洗練',zh:'深蓝简约酷炫'}},
-  {id:'natural', name:{ja:'ナチュラル',zh:'自然'},    icon:'🌿',price:0,desc:{ja:'温かみのある和紙調',zh:'温暖自然风'}},
-  {id:'cherry',  name:{ja:'チェリーゴールド',zh:'樱金'},icon:'🍯',price:0,desc:{ja:'ゴールドと琥珀の高級感',zh:'金色高级质感'}},
+  {id:'cute',    name:{ja:'かわいい',zh:'可爱'},      icon:'🌸',price:500,desc:{ja:'ピンクでかわいらしい',zh:'粉嫩可爱圆润'}},
+  {id:'cool',    name:{ja:'クール',zh:'冷酷'},        icon:'🌌',price:500,desc:{ja:'暗めの青、大人の色',zh:'深蓝简约酷炫'}},
+  {id:'natural', name:{ja:'ナチュラル',zh:'自然'},    icon:'🌿',price:500,desc:{ja:'温かみのある和紙風',zh:'温暖自然风'}},
+  {id:'cherry',  name:{ja:'チェリーゴールド',zh:'樱金'},icon:'🍯',price:777,desc:{ja:'ゴールドと琥珀の高級感',zh:'金色高级质感'}},
 ];
 
 // ── STATE ──
