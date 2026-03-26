@@ -117,8 +117,8 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
 .tab svg{opacity:.4;transition:opacity .2s}
 .tab.active{color:var(--acc);border-bottom-color:var(--acc)}
 .tab.active svg{opacity:1}
-.page{display:none;padding:24px 20px}
-.page.active{display:block}
+.page{display:none;padding:24px 20px;width:100%}
+.page.active{display:block;width:100%}
 /* TIMER */
 .timer-page{text-align:center}
 .mode-toggle{display:flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;width:fit-content;margin:0 auto 22px}
@@ -149,7 +149,7 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
 .sub-tabs{display:flex;margin-bottom:20px;border:1px solid var(--border);border-radius:8px;overflow:hidden}
 .sub-tab{flex:1;padding:8px 0;font-size:12px;font-weight:500;text-align:center;background:var(--bg);border:none;cursor:pointer;color:var(--text3);transition:background .15s,color .15s}
 .sub-tab.active{background:var(--acc);color:white}
-.sub-pane{display:none}.sub-pane.active{display:block}
+.sub-pane{display:none}.sub-pane.active{display:block;padding-top:0}
 /* HISTORY */
 .slabel{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
 .hgroup{margin-bottom:18px}
@@ -167,10 +167,28 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
 .sval{font-size:24px;font-weight:600;color:var(--text);line-height:1}.slbl2{font-size:12px;color:var(--text3);margin-top:4px}
 .ccard{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px}
 .cttl{font-size:13px;font-weight:500;color:var(--text);margin-bottom:14px}
-.bars{display:flex;align-items:flex-end;gap:5px;height:80px}
-.bw{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
-.bar{width:100%;background:var(--acc-md);border-radius:3px 3px 0 0;min-height:3px}.bar.today{background:var(--acc)}
-.blbl{font-size:10px;color:var(--text3)}
+.bars{display:flex;align-items:flex-end;gap:3px;height:120px;position:relative;padding-top:16px;padding-left:28px}
+.bars-grid{position:absolute;inset:16px 0 22px 28px;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
+.bars-grid-line{width:100%;border-top:1px dashed var(--border);position:relative}
+.bars-grid-lbl{position:absolute;left:-26px;top:-8px;font-size:9px;color:var(--text3);width:24px;text-align:right}
+.bw{flex:1;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;cursor:default}
+.bar{width:100%;background:linear-gradient(180deg,var(--acc) 0%,var(--acc-md) 100%);border-radius:4px 4px 0 0;min-height:3px;transition:opacity .15s;position:relative}
+.bar:hover{opacity:.75}
+.bar.today{background:linear-gradient(180deg,var(--acc) 0%,var(--acc-h) 100%);box-shadow:0 2px 8px color-mix(in srgb,var(--acc) 40%,transparent)}
+.bar-val{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:600;color:var(--acc);white-space:nowrap;opacity:0;transition:opacity .15s;pointer-events:none}
+.bw:hover .bar-val{opacity:1}
+.blbl{font-size:9px;color:var(--text3);white-space:nowrap;height:14px;line-height:14px;margin-top:2px}
+/* ACHIEVEMENT */
+.ach-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px}
+.ach-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:12px}
+.ach-empty{font-size:12px;color:var(--text3);text-align:center;padding:12px 0}
+.ach-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.ach-item:last-child{border-bottom:none;padding-bottom:0}
+.ach-icon{font-size:22px;flex-shrink:0}
+.ach-info{flex:1;min-width:0}
+.ach-subject{font-size:13px;font-weight:500;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ach-meta{font-size:11px;color:var(--text3);margin-top:2px}
+.ach-badge{font-size:10px;font-weight:600;color:#D4A017;background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:2px 8px;flex-shrink:0}
 .cal-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px}
 .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .cal-nav button{background:none;border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2)}
@@ -231,6 +249,12 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
 /* SETTINGS */
 .ssec{background:var(--bg);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:12px}
 .sstt{font-size:11px;font-weight:600;color:var(--text3);padding:9px 14px 5px;letter-spacing:1px;text-transform:uppercase;background:var(--bg2);border-bottom:1px solid var(--border)}
+.sstt-acc{font-size:11px;font-weight:600;color:var(--text3);padding:11px 14px;letter-spacing:1px;text-transform:uppercase;background:var(--bg2);display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.sstt-acc:hover{background:var(--bg2)}
+.sstt-acc-arrow{font-size:10px;transition:transform .2s;display:inline-block}
+.sstt-acc-arrow.open{transform:rotate(180deg)}
+.ssec-body{overflow:hidden;max-height:0;transition:max-height .3s ease}
+.ssec-body.open{max-height:2000px}
 .srow{display:flex;align-items:center;padding:12px 14px;border-top:1px solid var(--border)}
 .srow:first-of-type{border-top:none}
 .slb{flex:1;font-size:14px;color:var(--text)}
@@ -342,10 +366,50 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
 .undo-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:10px;font-size:12px;color:var(--text2)}
 .undo-btn{flex-shrink:0;background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:500;color:var(--acc);cursor:pointer;white-space:nowrap;transition:background .15s}
 .undo-btn:hover{background:var(--acc-lt)}
+/* AUTH */
+.auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:500}
+.auth-card{background:var(--bg);border-radius:20px;padding:32px 28px;width:min(340px,90vw);text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.18)}
+.auth-logo{font-size:42px;margin-bottom:12px}
+.auth-title{font-size:18px;font-weight:600;color:var(--text);margin-bottom:6px}
+.auth-sub{font-size:13px;color:var(--text2);margin-bottom:24px;line-height:1.6}
+.auth-google-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;border:1.5px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);font-size:14px;font-weight:500;cursor:pointer;transition:background .15s}
+.auth-google-btn:hover{background:var(--bg2)}
+.auth-skip{margin-top:14px;font-size:12px;color:var(--text3);cursor:pointer;text-decoration:underline}
+.auth-skip:hover{color:var(--text2)}
+.account-bar{display:flex;align-items:center;gap:8px;padding:7px 14px;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0}
+.account-avatar{width:24px;height:24px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.account-name{font-size:11px;color:var(--text2);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.account-signout{font-size:11px;color:var(--text3);background:none;border:none;cursor:pointer;padding:2px 6px;border-radius:5px;flex-shrink:0}
+.account-signout:hover{color:#EF4444}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:#22C55E;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.sync-dot.syncing{background:#F59E0B;animation:pulse .8s infinite}
 </style>
 </head>
 <body>
+<!-- AUTH OVERLAY -->
+<div id="auth-overlay" class="auth-overlay">
+  <div class="auth-card">
+    <div class="auth-logo">🍅</div>
+    <div class="auth-title">Pomodoro</div>
+    <div class="auth-sub">Googleアカウントでログインすると<br>どの端末でもデータを同期できます</div>
+    <button class="auth-google-btn" onclick="signInWithGoogle()">
+      <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-3.58-13.46-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Googleでログイン
+    </button>
+    <div class="auth-skip" onclick="skipAuth()">ログインせずに続ける</div>
+  </div>
+</div>
+
+
 <div class="app">
+  <!-- ACCOUNT BAR -->
+  <div id="account-bar" class="account-bar" style="display:none">
+    <img id="account-avatar" class="account-avatar" src="" alt="">
+    <span id="account-name" class="account-name"></span>
+    <div class="sync-dot" id="sync-dot"></div>
+    <button class="account-signout" onclick="signOut()">ログアウト</button>
+  </div>
   <div class="tabs">
     <button class="tab active" onclick="nav('timer',this)">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
@@ -411,37 +475,23 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
   <!-- RECORD -->
   <div id="page-record" class="page">
     <div class="sub-tabs">
-      <button class="sub-tab active" id="st-history" onclick="subTab('history')" data-i="tab_history">履歴</button>
-      <button class="sub-tab" id="st-stats" onclick="subTab('stats')" data-i="tab_stats">統計</button>
+      <button class="sub-tab active" id="st-stats" onclick="subTab('stats')" data-i="tab_stats">統計</button>
+      <button class="sub-tab" id="st-history" onclick="subTab('history')" data-i="tab_history">履歴</button>
     </div>
-    <div id="sp-history" class="sub-pane active">
-      <div class="undo-bar" id="hist-undo-bar" style="display:none"><span id="hist-undo-msg"></span><button class="undo-btn" id="hist-undo-btn" onclick="undoHist()">↩ 元に戻す</button></div>
-      <div id="hist-body"></div>
-    </div>
-    <div id="sp-stats" class="sub-pane">
+    <div id="sp-stats" class="sub-pane active">
       <div class="grid2">
         <div class="scard"><div class="sval" id="sv-min">0</div><div class="slbl2" data-i="stat_total">総集中時間（分）</div></div>
         <div class="scard"><div class="sval" id="sv-cnt">0</div><div class="slbl2" data-i="stat_sessions">完了セッション</div></div>
-        <div class="scard">
-          <div class="sval" id="sv-avg">0</div>
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px;gap:4px">
-            <div class="slbl2" data-i="stat_avg" style="margin-top:0;flex:1">1回あたりの平均集中時間</div>
-            <div style="display:flex;border:1px solid var(--border);border-radius:6px;overflow:hidden;flex-shrink:0">
-              <button class="avg-p-btn active" id="avg-today" onclick="setAvgPeriod('today')" style="padding:2px 5px;font-size:9px;border:none;background:var(--bg);color:var(--text3);cursor:pointer" data-i="cp_today">今日</button>
-              <button class="avg-p-btn" id="avg-week" onclick="setAvgPeriod('week')" style="padding:2px 5px;font-size:9px;border:none;border-left:1px solid var(--border);background:var(--bg);color:var(--text3);cursor:pointer" data-i="cp_week">今週</button>
-              <button class="avg-p-btn" id="avg-month" onclick="setAvgPeriod('month')" style="padding:2px 5px;font-size:9px;border:none;border-left:1px solid var(--border);background:var(--bg);color:var(--text3);cursor:pointer" data-i="cp_month">今月</button>
-            </div>
-          </div>
-        </div>
+        <div class="scard"><div class="sval" id="sv-avg">-</div><div class="slbl2" data-i="stat_avg">1回あたりの平均集中時間</div></div>
         <div class="scard"><div class="sval" id="sv-today">0</div><div class="slbl2" data-i="stat_today">今日のセッション</div></div>
       </div>
       <div class="ccard">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-          <div class="cttl" id="chart-title" style="margin-bottom:0">今週の集中時間（分）</div>
-          <div class="gm-chart-toggle" style="margin-bottom:0">
-            <button class="gm-chart-btn active" id="cp-today" onclick="setChartPeriod('today')" data-i="cp_today">今日</button>
-            <button class="gm-chart-btn" id="cp-week" onclick="setChartPeriod('week')" data-i="cp_week">今週</button>
-            <button class="gm-chart-btn" id="cp-month" onclick="setChartPeriod('month')" data-i="cp_month">今月</button>
+          <div class="cttl" id="chart-title" style="margin-bottom:0">今日の集中時間（分）</div>
+          <div style="display:flex;align-items:center;gap:0">
+            <button onclick="stepStatPeriod(-1)" style="width:28px;height:28px;border:1px solid var(--border);border-right:none;border-radius:6px 0 0 6px;background:var(--bg);color:var(--text);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center">&#8249;</button>
+            <div id="stat-period-lbl" style="min-width:44px;text-align:center;font-size:11px;font-weight:600;color:var(--text);border:1px solid var(--border);height:28px;display:flex;align-items:center;justify-content:center;background:var(--bg)">今日</div>
+            <button onclick="stepStatPeriod(1)" style="width:28px;height:28px;border:1px solid var(--border);border-left:none;border-radius:0 6px 6px 0;background:var(--bg);color:var(--text);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center">&#8250;</button>
           </div>
         </div>
         <div class="bars" id="wchart"></div>
@@ -451,17 +501,25 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
         <div class="cal-grid" id="cal-grid"></div>
         <div class="cal-legend">
           <span data-i="cal_legend">集中時間:</span>
-          <div class="cal-legend-dots">
+          <div class="cal-legend-dots" id="cal-legend-dots">
             <div class="cal-legend-dot" style="background:#F1F5F9"></div>
-            <div class="cal-legend-dot" style="background:#BFDBFE"></div>
-            <div class="cal-legend-dot" style="background:#93C5FD"></div>
-            <div class="cal-legend-dot" style="background:#3B82F6"></div>
-            <div class="cal-legend-dot" style="background:#1D4ED8"></div>
+            <div class="cal-legend-dot" id="cld-1"></div>
+            <div class="cal-legend-dot" id="cld-2"></div>
+            <div class="cal-legend-dot" id="cld-3"></div>
+            <div class="cal-legend-dot" id="cld-4"></div>
             <div class="cal-legend-dot" style="background:#D4A017"></div>
           </div>
-          <span style="font-size:10px;color:var(--text3)">0 / 1〜30 / 31〜60 / 61〜90 / 91分〜 / ⭐金</span>
+          <span style="font-size:10px;color:var(--text3)" id="cal-legend-labels">0 / 1〜30 / 31〜60 / 61〜90 / 91分〜 / ⭐金</span>
         </div>
       </div>
+      <div class="ach-card" style="margin-top:16px">
+        <div class="ach-title" data-i="ach_title">🏆 達成した目標</div>
+        <div id="ach-list"></div>
+      </div>
+    </div>
+    <div id="sp-history" class="sub-pane">
+      <div class="undo-bar" id="hist-undo-bar" style="display:none"><span id="hist-undo-msg"></span><button class="undo-btn" id="hist-undo-btn" onclick="undoHist()">↩ 元に戻す</button></div>
+      <div id="hist-body"></div>
     </div>
   </div>
 
@@ -537,14 +595,20 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
 
   <!-- SHOP -->
   <div id="page-shop" class="page">
-    <div class="shop-header">
-      <div style="font-size:15px;font-weight:600;color:var(--text)" data-i="shop_title">ショップ</div>
+    <div style="display:flex;align-items:center;margin-bottom:12px">
+      <div style="font-size:15px;font-weight:600;color:var(--text);flex:1" data-i="shop_title">ショップ</div>
       <div class="shop-coins"><span>🪙</span><span id="shop-coin-disp">0</span><span data-i="coin_label">コイン</span></div>
     </div>
-    <div class="shop-sec-title" data-i="shop_themes">カラーテーマ</div>
-    <div class="theme-grid" id="theme-grid"></div>
-    <div class="shop-sec-title" data-i="shop_skins">スキン</div>
-    <div class="shop-list" id="skin-list"></div>
+    <div class="sub-tabs">
+      <button class="sub-tab active" id="st-themes" onclick="shopSubTab('themes')" data-i="shop_themes">カラーテーマ</button>
+      <button class="sub-tab" id="st-skins" onclick="shopSubTab('skins')" data-i="shop_skins">スキン</button>
+    </div>
+    <div id="sp-themes" class="sub-pane active">
+      <div class="theme-grid" id="theme-grid"></div>
+    </div>
+    <div id="sp-skins" class="sub-pane">
+      <div class="shop-list" id="skin-list"></div>
+    </div>
   </div>
 
   <!-- SETTINGS -->
@@ -575,12 +639,20 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
       </div>
     </div>
     <div class="ssec">
-      <div class="sstt" data-i="set_skin">スキン</div>
-      <div id="skin-rows"></div>
+      <div class="sstt-acc" onclick="toggleAcc('acc-skin')">
+        <span data-i="set_skin">スキン</span><span class="sstt-acc-arrow" id="arr-acc-skin">▼</span>
+      </div>
+      <div class="ssec-body" id="acc-skin">
+        <div id="skin-rows" style="padding:6px 0"></div>
+      </div>
     </div>
     <div class="ssec">
-      <div class="sstt" data-i="set_theme">カラーテーマ</div>
-      <div id="theme-rows"></div>
+      <div class="sstt-acc" onclick="toggleAcc('acc-theme')">
+        <span data-i="set_theme">カラーテーマ</span><span class="sstt-acc-arrow" id="arr-acc-theme">▼</span>
+      </div>
+      <div class="ssec-body" id="acc-theme">
+        <div id="theme-rows" style="padding:6px 0"></div>
+      </div>
     </div>
     <div class="ssec">
       <div class="sstt" data-i="set_lang">言語 / Language</div>
@@ -588,21 +660,43 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
         <select class="sel" id="lang-sel" onchange="setLang(this.value)"><option value="ja">日本語</option><option value="zh">中文</option></select>
       </div>
     </div>
-    <div class="ssec">
-      <div class="sstt" style="color:#F59E0B">🧪 テスト用</div>
-      <div class="srow"><span class="slb" style="font-size:13px">今日に92分の記録を追加</span><button class="stb" style="width:auto;padding:5px 10px;border-radius:8px;font-size:12px" onclick="addTestRecord()">追加</button></div>
-      <div class="srow"><span class="slb" style="font-size:13px">追加したテスト記録を削除</span><button class="stb" style="width:auto;padding:5px 10px;border-radius:8px;font-size:12px;color:#EF4444" onclick="removeTestRecord()">削除</button></div>
+    <div class="ssec" id="set-account-sec">
+      <div class="sstt" data-i="set_account">☁️ アカウント</div>
+      <!-- ログイン済み -->
+      <div id="set-logged-in" style="display:none;padding:12px 14px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <img id="set-avatar" style="width:36px;height:36px;border-radius:50%;object-fit:cover" src="" alt="">
+          <div style="flex:1;overflow:hidden">
+            <div id="set-username" style="font-size:13px;font-weight:500;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div>
+            <div id="set-email" style="font-size:11px;color:var(--text3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div>
+          </div>
+          <div class="sync-dot" id="set-sync-dot"></div>
+        </div>
+        <button onclick="signOut()" data-i="set_logout" style="width:100%;padding:9px;border-radius:8px;border:1px solid #EF4444;background:none;color:#EF4444;font-size:13px;font-weight:500;cursor:pointer">ログアウト</button>
+      </div>
+      <!-- 未ログイン -->
+      <div id="set-logged-out" style="padding:12px 14px">
+        <div data-i="set_login_desc" style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.6">Googleアカウントでログインすると、どの端末でもデータを同期できます。</div>
+        <button onclick="signInWithGoogle()" class="auth-google-btn" style="border-radius:8px">
+          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-3.58-13.46-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          <span data-i="set_login_btn">Googleでログイン</span>
+        </button>
+      </div>
     </div>
     <button class="savebtn" onclick="saveSettings()" data-i="save_btn">保存する</button>
   </div>
 </div>
 <div class="toast" id="toast"></div>
 
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script>
 // ── I18N ──
 const I18N={
-  ja:{tab_timer:'タイマー',tab_record:'記録',tab_todo:'目標',tab_shop:'店',tab_settings:'設定',tab_history:'履歴',tab_stats:'統計',mode_cd:'カウントダウン',mode_cu:'カウントアップ',coin_label:'コイン',stat_total:'総集中時間（分）',stat_sessions:'完了セッション',stat_avg:'1回あたりの平均集中時間',stat_today:'今日のセッション',chart_week:'今週の集中時間（分）',cal_legend:'集中時間:',cal_less:'少 → 多',cp_today:'今日',cp_week:'今週',cp_month:'今月',cp_title_today:'今日の集中時間（分）',cp_title_week:'今週の集中時間（分）',cp_title_month:'今月の集中時間（分）',shop_title:'ショップ',shop_themes:'カラーテーマ',shop_skins:'スキン',set_timer:'タイマー時間',set_focus:'集中',set_short:'小休憩',set_long:'長休憩',set_auto:'自動スタート',set_auto_break:'休憩を自動でスタート',set_auto_focus:'集中を自動でスタート',set_alarm:'アラーム音量',set_volume:'音量',set_test_alarm:'テスト再生',set_skin:'スキン',set_theme:'カラーテーマ',set_lang:'言語 / Language',set_lang_label:'言語',save_btn:'保存する',phase_focus:'集中',phase_short:'小休憩',phase_long:'長休憩',toast_complete:'セッション完了！',toast_break_end:'休憩終了！',toast_saved:'設定を保存しました',toast_bought:'購入しました！',toast_no_coins:'コインが足りません',toast_applied:'適用しました',min_unit:'分',times_unit:'回目',owned:'所持中',active_lbl:'使用中',buy:'購入する',use:'使う',free:'無料',history_empty:'まだセッションがありません',todo_placeholder:'新しいタスクを入力…',todo_add:'追加',todo_all:'すべて',todo_active:'未完了',todo_done:'完了',todo_clear_done:'完了済みを削除',todo_remaining:'件残り',todo_empty:'タスクがありません',goal_form_title:'新しい目標を追加',goal_subj_ph:'科目・テーマを入力',goal_days_unit:'日間',goal_hours_unit:'時間',goal_add_btn:'目標を追加',goal_use_mini:'ミニ目標で時間を管理する',goal_list_lbl:'目標一覧',todo_sec_lbl:'ToDo リスト',goal_empty:'目標がまだありません',goal_no_active:'目標を選択',tgb_label:'現在の目標',tgb_none:'目標なし',tgb_done:'🎉 目標達成！',tgb_remain:'あと {h} 時間で達成！',goal_progress:'{done} / {total} 時間',goal_active_now:'進行中',goal_day_unit:'日間',goal_done_badge:'🎉 達成！',stab_goal:'目標',stab_todo:'ToDo',gm_detail:'詳細を開く',gm_mini_title:'ミニ目標',gm_mini_ph:'ミニ目標の名前',gm_mini_add:'追加',gm_mini_empty:'ミニ目標がありません',gm_chart_bar:'棒グラフ',gm_chart_pie:'円グラフ',gm_main:'全体',gm_remain:'残り',tgb_mini_label:'ミニ目標'},
-  zh:{tab_timer:'计时器',tab_record:'记录',tab_todo:'目标',tab_shop:'商店',tab_settings:'设置',tab_history:'历史',tab_stats:'统计',mode_cd:'倒计时',mode_cu:'正计时',coin_label:'硬币',stat_total:'总专注时间（分）',stat_sessions:'完成场次',stat_avg:'每次平均专注时间',stat_today:'今日场次',chart_week:'本周专注时间（分）',cal_legend:'专注时间:',cal_less:'少 → 多',cp_today:'今日',cp_week:'本周',cp_month:'本月',cp_title_today:'今日专注时间（分）',cp_title_week:'本周专注时间（分）',cp_title_month:'本月专注时间（分）',shop_title:'商店',shop_themes:'颜色主题',shop_skins:'皮肤',set_timer:'计时设置',set_focus:'专注',set_short:'短休息',set_long:'长休息',set_auto:'自动开始',set_auto_break:'自动开始休息',set_auto_focus:'自动开始专注',set_alarm:'闹钟音量',set_volume:'音量',set_test_alarm:'测试播放',set_skin:'皮肤',set_theme:'颜色主题',set_lang:'言語 / Language',set_lang_label:'语言',save_btn:'保存',phase_focus:'专注',phase_short:'短休息',phase_long:'长休息',toast_complete:'场次完成！',toast_break_end:'休息结束！',toast_saved:'设置已保存',toast_bought:'购买成功！',toast_no_coins:'硬币不足',toast_applied:'已应用',min_unit:'分',times_unit:'次',owned:'已拥有',active_lbl:'使用中',buy:'购买',use:'使用',free:'免费',history_empty:'还没有记录',todo_placeholder:'输入新任务…',todo_add:'添加',todo_all:'全部',todo_active:'未完成',todo_done:'已完成',todo_clear_done:'删除已完成',todo_remaining:'项未完成',todo_empty:'没有任务',goal_form_title:'添加新目标',goal_subj_ph:'输入科目或主题',goal_days_unit:'天',goal_hours_unit:'小时',goal_add_btn:'添加目标',goal_use_mini:'用子目标管理时间',goal_list_lbl:'目标列表',todo_sec_lbl:'待办清单',goal_empty:'还没有目标',goal_no_active:'选择目标',tgb_label:'当前目标',tgb_none:'无目标',tgb_done:'🎉 目标达成！',tgb_remain:'还差 {h} 小时！',goal_progress:'已学 {done} / 目标 {total} 小时',goal_active_now:'进行中',goal_day_unit:'天',goal_done_badge:'🎉 达成！',stab_goal:'目标',stab_todo:'待办',gm_detail:'查看详情',gm_mini_title:'子目标',gm_mini_ph:'子目标名称',gm_mini_add:'添加',gm_mini_empty:'还没有子目标',gm_chart_bar:'柱状图',gm_chart_pie:'饼图',gm_main:'总体',gm_remain:'剩余',tgb_mini_label:'子目标'}
+  ja:{tab_timer:'タイマー',tab_record:'記録',tab_todo:'目標',tab_shop:'店',tab_settings:'設定',tab_history:'履歴',tab_stats:'統計',mode_cd:'カウントダウン',mode_cu:'カウントアップ',coin_label:'コイン',stat_total:'総集中時間（分）',stat_sessions:'完了セッション',stat_avg:'1回あたりの平均集中時間',stat_today:'今日のセッション',chart_week:'今週の集中時間（分）',cal_legend:'集中時間:',cal_less:'少 → 多',cp_today:'今日',cp_week:'今週',cp_month:'今月',cp_title_today:'今日の集中時間（分）',cp_title_week:'今週の集中時間（分）',cp_title_month:'今月の集中時間（分）',shop_title:'ショップ',shop_themes:'カラーテーマ',shop_skins:'スキン',set_timer:'タイマー時間',set_focus:'集中',set_short:'小休憩',set_long:'長休憩',set_auto:'自動スタート',set_auto_break:'休憩を自動でスタート',set_auto_focus:'集中を自動でスタート',set_alarm:'アラーム音量',set_volume:'音量',set_test_alarm:'テスト再生',set_skin:'スキン',set_theme:'カラーテーマ',set_lang:'言語 / Language',set_lang_label:'言語',save_btn:'保存する',phase_focus:'集中',phase_short:'小休憩',phase_long:'長休憩',toast_complete:'セッション完了！',toast_break_end:'休憩終了！',toast_saved:'設定を保存しました',toast_bought:'購入しました！',toast_no_coins:'コインが足りません',toast_applied:'適用しました',min_unit:'分',times_unit:'回目',owned:'所持中',active_lbl:'使用中',buy:'購入する',use:'使う',free:'無料',history_empty:'まだセッションがありません',todo_placeholder:'新しいタスクを入力…',todo_add:'追加',todo_all:'すべて',todo_active:'未完了',todo_done:'完了',todo_clear_done:'完了済みを削除',todo_remaining:'件残り',todo_empty:'タスクがありません',goal_form_title:'新しい目標を追加',goal_subj_ph:'科目・テーマを入力',goal_days_unit:'日間',goal_hours_unit:'時間',goal_add_btn:'目標を追加',goal_use_mini:'ミニ目標で時間を管理する',goal_list_lbl:'目標一覧',todo_sec_lbl:'ToDo リスト',goal_empty:'目標がまだありません',goal_no_active:'目標を選択',tgb_label:'現在の目標',tgb_none:'目標なし',tgb_done:'🎉 目標達成！',tgb_remain:'あと {h} 時間で達成！',goal_progress:'{done} / {total} 時間',goal_active_now:'進行中',goal_day_unit:'日間',goal_done_badge:'🎉 達成！',stab_goal:'目標',stab_todo:'ToDo',gm_detail:'詳細を開く',gm_mini_title:'ミニ目標',gm_mini_ph:'ミニ目標の名前',gm_mini_add:'追加',gm_mini_empty:'ミニ目標がありません',gm_chart_bar:'棒グラフ',gm_chart_pie:'円グラフ',gm_main:'全体',gm_remain:'残り',tgb_mini_label:'ミニ目標',set_account:'☁️ アカウント',set_logout:'ログアウト',set_login_desc:'Googleアカウントでログインすると、どの端末でもデータを同期できます。',set_login_btn:'Googleでログイン',ach_title:'🏆 達成した目標',ach_empty:'まだ達成した目標はありません',ach_hours:'時間',ach_days:'日間'},
+  zh:{tab_timer:'计时器',tab_record:'记录',tab_todo:'目标',tab_shop:'商店',tab_settings:'设置',tab_history:'历史',tab_stats:'统计',mode_cd:'倒计时',mode_cu:'正计时',coin_label:'硬币',stat_total:'总专注时间（分）',stat_sessions:'完成场次',stat_avg:'每次平均专注时间',stat_today:'今日场次',chart_week:'本周专注时间（分）',cal_legend:'专注时间:',cal_less:'少 → 多',cp_today:'今日',cp_week:'本周',cp_month:'本月',cp_title_today:'今日专注时间（分）',cp_title_week:'本周专注时间（分）',cp_title_month:'本月专注时间（分）',shop_title:'商店',shop_themes:'颜色主题',shop_skins:'皮肤',set_timer:'计时设置',set_focus:'专注',set_short:'短休息',set_long:'长休息',set_auto:'自动开始',set_auto_break:'自动开始休息',set_auto_focus:'自动开始专注',set_alarm:'闹钟音量',set_volume:'音量',set_test_alarm:'测试播放',set_skin:'皮肤',set_theme:'颜色主题',set_lang:'言語 / Language',set_lang_label:'语言',save_btn:'保存',phase_focus:'专注',phase_short:'短休息',phase_long:'长休息',toast_complete:'场次完成！',toast_break_end:'休息结束！',toast_saved:'设置已保存',toast_bought:'购买成功！',toast_no_coins:'硬币不足',toast_applied:'已应用',min_unit:'分',times_unit:'次',owned:'已拥有',active_lbl:'使用中',buy:'购买',use:'使用',free:'免费',history_empty:'还没有记录',todo_placeholder:'输入新任务…',todo_add:'添加',todo_all:'全部',todo_active:'未完成',todo_done:'已完成',todo_clear_done:'删除已完成',todo_remaining:'项未完成',todo_empty:'没有任务',goal_form_title:'添加新目标',goal_subj_ph:'输入科目或主题',goal_days_unit:'天',goal_hours_unit:'小时',goal_add_btn:'添加目标',goal_use_mini:'用子目标管理时间',goal_list_lbl:'目标列表',todo_sec_lbl:'待办清单',goal_empty:'还没有目标',goal_no_active:'选择目标',tgb_label:'当前目标',tgb_none:'无目标',tgb_done:'🎉 目标达成！',tgb_remain:'还差 {h} 小时！',goal_progress:'已学 {done} / 目标 {total} 小时',goal_active_now:'进行中',goal_day_unit:'天',goal_done_badge:'🎉 达成！',stab_goal:'目标',stab_todo:'待办',gm_detail:'查看详情',gm_mini_title:'子目标',gm_mini_ph:'子目标名称',gm_mini_add:'添加',gm_mini_empty:'还没有子目标',gm_chart_bar:'柱状图',gm_chart_pie:'饼图',gm_main:'总体',gm_remain:'剩余',tgb_mini_label:'子目标',set_account:'☁️ 账户',set_logout:'退出登录',set_login_desc:'使用Google账户登录，可在任意设备同步数据。',set_login_btn:'使用Google登录',ach_title:'🏆 已达成目标',ach_empty:'还没有达成的目标',ach_hours:'小时',ach_days:'天'}
 };
 
 // ── COLOR THEMES ──
@@ -664,9 +758,10 @@ function fmt(s){const a=Math.abs(Math.round(s));return String(Math.floor(a/60)).
 function sp(){
   localStorage.setItem('pomo-coins',coins);
   localStorage.setItem('pomo-hist',JSON.stringify(hist));
+  if(typeof saveToCloud==='function')saveToCloud();
 }
-function stt(){localStorage.setItem('pomo-todos',JSON.stringify(todos));}
-function sg(){localStorage.setItem('pomo-goals',JSON.stringify(goals));localStorage.setItem('pomo-active-goal',activeGoalId);localStorage.setItem('pomo-active-mini',activeMiniId);}
+function stt(){localStorage.setItem('pomo-todos',JSON.stringify(todos));if(typeof saveToCloud==='function')saveToCloud();}
+function sg(){localStorage.setItem('pomo-goals',JSON.stringify(goals));localStorage.setItem('pomo-active-goal',activeGoalId);localStorage.setItem('pomo-active-mini',activeMiniId);if(typeof saveToCloud==='function')saveToCloud();}
 
 // アプリを閉じる直前に全データを保存
 window.addEventListener('beforeunload',()=>{
@@ -708,7 +803,9 @@ function applyTheme(id){
   const b=document.body;
   THEMES.forEach(th=>b.classList.remove('theme-'+th.id));
   if(id!=='blue')b.classList.add('theme-'+id);
-  activeTheme=id;localStorage.setItem('pomo-theme',id);drawT();
+  activeTheme=id;localStorage.setItem('pomo-theme',id);
+  drawT();updateCalLegend();
+  if(document.getElementById('cal-grid'))renderCal();
 }
 function applySkin(id){
   const b=document.body;
@@ -737,13 +834,13 @@ function drawT(){
   const c=2*Math.PI*90;
   const ring=document.getElementById('ring');
   if(ring){ring.style.strokeDashoffset=c*(1-Math.min(pr,1));ring.style.stroke=PHC[phase];}
-  document.getElementById('tdisp').textContent=fmt(disp);
-  document.getElementById('pdot').style.background=PHC[phase];
-  document.getElementById('pname').textContent=t(PHK[phase]);
-  document.getElementById('pill').style.background=PHP[phase];
-  document.getElementById('pbtn').style.background=PHC[phase];
-  for(let i=0;i<4;i++)document.getElementById('d'+i).classList.toggle('on',i<sessions%4);
-  document.getElementById('coin-disp').textContent=coins;
+  const td=document.getElementById('tdisp');if(td)td.textContent=fmt(disp);
+  const pd=document.getElementById('pdot');if(pd)pd.style.background=PHC[phase];
+  const pn=document.getElementById('pname');if(pn)pn.textContent=t(PHK[phase]);
+  const pl=document.getElementById('pill');if(pl)pl.style.background=PHP[phase];
+  const pb=document.getElementById('pbtn');if(pb)pb.style.background=PHC[phase];
+  for(let i=0;i<4;i++){const d=document.getElementById('d'+i);if(d)d.classList.toggle('on',i<sessions%4);}
+  const cd=document.getElementById('coin-disp');if(cd)cd.textContent=coins;
 }
 
 // ── TIMER ──
@@ -787,35 +884,14 @@ function checkGoalBonus(){
   const doneMin=goalDoneMin(g);
   const totalMin=goalTotalMin(g);
   if(doneMin>=totalMin){
-    const bonus=Math.round(totalMin/60)*30;
     g.bonusGiven=true;
-    coins+=bonus;
-    sp();sg();
-    document.getElementById('coin-disp').textContent=coins;
-    // 大きなポップアップ表示
+    sg();
     setTimeout(()=>{
-      const msg=lang==='zh'
-        ?`🎉 目标达成！奖励 🪙${bonus} 硬币！`
-        :`🎉 目標達成！ボーナス 🪙${bonus} コイン！`;
-      toast(msg);
-      showBonusPop(bonus);
+      toast(lang==='zh'?'🎉 目标达成！':'🎉 目標達成！');
       updateTGB();
       renderGoals();
     },400);
   }
-}
-
-function showBonusPop(bonus){
-  const p=document.createElement('div');
-  p.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--text);color:white;padding:18px 28px;border-radius:20px;font-size:16px;font-weight:600;text-align:center;z-index:300;pointer-events:none;animation:bonusFade 2.5s ease-out forwards';
-  p.innerHTML=`🎉<br>${lang==='zh'?'目标达成':'目標達成！'}<br><span style="font-size:22px">🪙+${bonus}</span>`;
-  if(!document.getElementById('bonus-style')){
-    const s=document.createElement('style');s.id='bonus-style';
-    s.textContent='@keyframes bonusFade{0%{opacity:0;transform:translate(-50%,-60%)}15%{opacity:1;transform:translate(-50%,-50%)}70%{opacity:1}100%{opacity:0;transform:translate(-50%,-40%)}}';
-    document.head.appendChild(s);
-  }
-  document.body.appendChild(p);
-  setTimeout(()=>p.remove(),2600);
 }
 function doReset(){
   clearInterval(iv);running=false;
@@ -828,27 +904,49 @@ function doSkip(){if(timerMode==='cu')return;clearInterval(iv);running=false;sec
 // ── NAV ──
 function nav(id,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');btn.classList.add('active');
-  if(id==='record'){renderHist();renderStats();renderCal();}
+  document.querySelectorAll('.tabs .tab').forEach(b=>b.classList.remove('active'));
+  const pg=document.getElementById('page-'+id);if(pg)pg.classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(id==='record'){renderStats();renderCal();}
   if(id==='todo'){renderGoals();}
-  if(id==='shop')renderShop();
+  if(id==='shop'){renderShop();shopSubTab('themes');}
   if(id==='settings')loadSettings();
+}
+function shopSubTab(id){
+  ['themes','skins'].forEach(k=>{
+    const btn=document.getElementById('st-'+k);
+    const pane=document.getElementById('sp-'+k);
+    if(btn)btn.classList.toggle('active',k===id);
+    if(pane)pane.classList.toggle('active',k===id);
+  });
+}
+function toggleAcc(id){
+  const body=document.getElementById(id);
+  const arr=document.getElementById('arr-'+id);
+  if(!body)return;
+  const isOpen=body.classList.contains('open');
+  body.classList.toggle('open',!isOpen);
+  if(arr)arr.classList.toggle('open',!isOpen);
 }
 function goalSubTab(id){
   ['goal','gtodo'].forEach(k=>{
-    document.getElementById('st-'+k).classList.toggle('active',k===id);
-    document.getElementById('sp-'+k).classList.toggle('active',k===id);
+    const btn=document.getElementById('st-'+k);
+    const pane=document.getElementById('sp-'+k);
+    if(btn)btn.classList.toggle('active',k===id);
+    if(pane)pane.classList.toggle('active',k===id);
   });
   if(id==='gtodo')renderTodos();
   if(id==='goal')renderGoals();
 }
 function subTab(id){
-  document.getElementById('st-history').classList.toggle('active',id==='history');
-  document.getElementById('st-stats').classList.toggle('active',id==='stats');
-  document.getElementById('sp-history').classList.toggle('active',id==='history');
-  document.getElementById('sp-stats').classList.toggle('active',id==='stats');
+  ['stats','history'].forEach(k=>{
+    const btn=document.getElementById('st-'+k);
+    const pane=document.getElementById('sp-'+k);
+    if(btn)btn.classList.toggle('active',k===id);
+    if(pane)pane.classList.toggle('active',k===id);
+  });
   if(id==='stats'){renderStats();renderCal();}
+  if(id==='history')renderHist();
 }
 // ── HISTORY ──
 function renderHist(){
@@ -898,96 +996,150 @@ function delS(ts){
 }
 
 // ── STATS ──
-let chartPeriod='week';
-let avgPeriod='today';
+let statPeriod='today'; // 'today' | 'week' | 'month'
 
-function setAvgPeriod(p){
-  avgPeriod=p;
-  ['today','week','month'].forEach(k=>{
-    const btn=document.getElementById('avg-'+k);
-    if(btn){btn.style.background=k===p?'var(--acc)':'var(--bg)';btn.style.color=k===p?'white':'var(--text3)';}
-  });
-  updateAvgStat();
-}
-function updateAvgStat(){
-  const el=document.getElementById('sv-avg');
-  if(!el)return;
-  const now=new Date();
-  let filtered;
-  if(avgPeriod==='today'){
-    filtered=hist.filter(s=>new Date(s.ts).toDateString()===now.toDateString());
-  }else if(avgPeriod==='week'){
-    filtered=hist.filter(s=>Math.floor((now-new Date(s.ts))/86400000)<7);
-  }else{
-    filtered=hist.filter(s=>{const d=new Date(s.ts);return d.getFullYear()===now.getFullYear()&&d.getMonth()===now.getMonth();});
-  }
-  el.textContent=filtered.length?Math.round(filtered.reduce((a,s)=>a+s.dur,0)/60/filtered.length)+'分':'-';
-} // 'today' | 'week' | 'month'
+const STAT_PERIODS=['today','week','month'];
+const STAT_PERIOD_LABELS={
+  ja:{today:'今日',week:'今週',month:'今月'},
+  zh:{today:'今日',week:'本周',month:'本月'}
+};
 
-function setChartPeriod(p){
-  chartPeriod=p;
-  ['today','week','month'].forEach(k=>{
-    const btn=document.getElementById('cp-'+k);
-    if(btn)btn.classList.toggle('active',k===p);
-  });
+function stepStatPeriod(dir){
+  const idx=STAT_PERIODS.indexOf(statPeriod);
+  statPeriod=STAT_PERIODS[(idx+dir+3)%3];
   renderStats();
 }
 
 function renderStats(){
-  // 統計ページが表示されていない場合は何もしない
   const svMin=document.getElementById('sv-min');
   if(!svMin)return;
+  const now=new Date();
+
+  // 期間ラベル更新
+  const lbl=document.getElementById('stat-period-lbl');
+  if(lbl)lbl.textContent=(STAT_PERIOD_LABELS[lang]||STAT_PERIOD_LABELS.ja)[statPeriod];
+
+  // 期間フィルター
+  let periodHist;
+  if(statPeriod==='today'){
+    periodHist=hist.filter(s=>new Date(s.ts).toDateString()===now.toDateString());
+  }else if(statPeriod==='week'){
+    periodHist=hist.filter(s=>Math.floor((now-new Date(s.ts))/86400000)<7);
+  }else{
+    periodHist=hist.filter(s=>{const d=new Date(s.ts);return d.getFullYear()===now.getFullYear()&&d.getMonth()===now.getMonth();});
+  }
+
+  // カード更新（全期間はそのまま、平均・棒グラフは期間フィルター）
   const tot2=hist.reduce((a,s)=>a+s.dur,0);
   svMin.textContent=Math.round(tot2/60);
-  document.getElementById('sv-cnt').textContent=hist.length;
-  const avgEl=document.getElementById('sv-avg');if(avgEl)avgEl.textContent=0;
-  updateAvgStat();
-  document.getElementById('sv-today').textContent=hist.filter(s=>new Date(s.ts).toDateString()===new Date().toDateString()).length;
+  const svCnt=document.getElementById('sv-cnt');if(svCnt)svCnt.textContent=hist.length;
+  const svToday=document.getElementById('sv-today');if(svToday)svToday.textContent=hist.filter(s=>new Date(s.ts).toDateString()===now.toDateString()).length;
 
-  const now=new Date();
+  // 平均（選択期間）
+  const avgEl=document.getElementById('sv-avg');
+  if(avgEl)avgEl.textContent=periodHist.length?Math.round(periodHist.reduce((a,s)=>a+s.dur,0)/60/periodHist.length)+'分':'-';
+
+  // 棒グラフタイトル
   const titleEl=document.getElementById('chart-title');
-  if(titleEl)titleEl.textContent=t('cp_title_'+chartPeriod);
+  const titles={ja:{today:'今日の集中時間（分）',week:'今週の集中時間（分）',month:'今月の集中時間（分）'},zh:{today:'今日专注时间（分）',week:'本周专注时间（分）',month:'本月专注时间（分）'}};
+  if(titleEl)titleEl.textContent=(titles[lang]||titles.ja)[statPeriod];
 
-  if(chartPeriod==='today'){
-    const hours=Array(24).fill(0);
-    hist.forEach(s=>{
-      const sd=new Date(s.ts);
-      if(sd.toDateString()===now.toDateString())hours[sd.getHours()]+=Math.round(s.dur/60);
+  // 棒グラフ描画
+  const wc=document.getElementById('wchart');
+  if(!wc)return;
+
+  const H=100; // 棒エリアの高さ(px)
+  function makeBar(v,mx,isToday,lbl){
+    const h=mx>0?Math.round((v/mx)*H):0;
+    const barH=Math.max(h,v>0?4:2);
+    return`<div class="bw">
+      <div class="bar${isToday?' today':''}" style="height:${barH}px">
+        ${v>0?`<div class="bar-val">${v}</div>`:''}
+      </div>
+      <div class="blbl">${lbl}</div>
+    </div>`;
+  }
+  function makeGrid(mx){
+    const steps=4;
+    const lines=Array.from({length:steps+1},(_,i)=>{
+      const val=Math.round(mx/steps*(steps-i));
+      return`<div class="bars-grid-line"><span class="bars-grid-lbl">${i<steps?val:''}</span></div>`;
     });
+    return`<div class="bars-grid">${lines.join('')}</div>`;
+  }
+
+  if(statPeriod==='today'){
+    const hours=Array(24).fill(0);
+    periodHist.forEach(s=>{hours[new Date(s.ts).getHours()]+=Math.round(s.dur/60);});
     const mx=Math.max(...hours,1);
-    const wc=document.getElementById('wchart');
-    if(wc)wc.innerHTML=hours.map((v,i)=>{
-      const isNow=i===now.getHours();
-      return`<div class="bw"><div class="bar${isNow?' today':''}" style="height:${Math.round((v/mx)*72)+3}px" title="${v}分"></div><div class="blbl">${i%3===0?i+'h':''}</div></div>`;
-    }).join('');
-  } else if(chartPeriod==='week'){
+    wc.innerHTML=makeGrid(mx)+hours.map((v,i)=>makeBar(v,mx,i===now.getHours(),i%3===0?i+'h':'')).join('');
+  }else if(statPeriod==='week'){
     const days=lang==='zh'?['日','一','二','三','四','五','六']:['日','月','火','水','木','金','土'];
     const wd=Array(7).fill(0);
-    hist.forEach(s=>{const diff=Math.floor((now-new Date(s.ts))/86400000);if(diff<7)wd[6-diff]+=Math.round(s.dur/60);});
+    // 今週の日曜日を起点にする
+    const todayDow=now.getDay(); // 0=日, 1=月, ..., 6=土
+    const weekStart=new Date(now);
+    weekStart.setHours(0,0,0,0);
+    weekStart.setDate(now.getDate()-todayDow); // 今週の日曜日
+    periodHist.forEach(s=>{
+      const sd=new Date(s.ts);
+      sd.setHours(0,0,0,0);
+      const diff=Math.round((sd-weekStart)/86400000);
+      if(diff>=0&&diff<7)wd[diff]+=Math.round(s.dur/60);
+    });
     const mx=Math.max(...wd,1);
-    const wc=document.getElementById('wchart');
-    if(wc)wc.innerHTML=wd.map((v,i)=>{
-      const di=(now.getDay()-6+i+7)%7;
-      return`<div class="bw"><div class="bar${i===6?' today':''}" style="height:${Math.round((v/mx)*72)+3}px" title="${v}分"></div><div class="blbl">${days[di]}</div></div>`;
-    }).join('');
-  } else {
+    wc.innerHTML=makeGrid(mx)+wd.map((v,i)=>makeBar(v,mx,i===todayDow,days[i])).join('');
+  }else{
     const dim=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
     const md=Array(dim).fill(0);
-    hist.forEach(s=>{
-      const sd=new Date(s.ts);
-      if(sd.getFullYear()===now.getFullYear()&&sd.getMonth()===now.getMonth())
-        md[sd.getDate()-1]+=Math.round(s.dur/60);
-    });
+    periodHist.forEach(s=>{const sd=new Date(s.ts);if(sd.getFullYear()===now.getFullYear()&&sd.getMonth()===now.getMonth())md[sd.getDate()-1]+=Math.round(s.dur/60);});
     const mx=Math.max(...md,1);
-    const wc=document.getElementById('wchart');
-    if(wc)wc.innerHTML=md.map((v,i)=>{
-      const day=i+1;
-      const isToday=day===now.getDate();
-      const showLbl=day===1||day%5===0||day===dim;
-      return`<div class="bw"><div class="bar${isToday?' today':''}" style="height:${Math.round((v/mx)*72)+3}px" title="${day}日 ${v}分"></div><div class="blbl">${showLbl?day:''}</div></div>`;
-    }).join('');
+    wc.innerHTML=makeGrid(mx)+md.map((v,i)=>{const day=i+1;const showLbl=day===1||day%5===0||day===dim;return makeBar(v,mx,day===now.getDate(),showLbl?String(day):'');}).join('');
   }
+  renderAchievements();
 }
+
+function renderAchievements(){
+  const el=document.getElementById('ach-list');
+  if(!el)return;
+  // bonusGivenが立っている目標＝達成済み
+  const achieved=goals.filter(g=>g.bonusGiven);
+  if(!achieved.length){
+    el.innerHTML=`<div class="ach-empty">${t('ach_empty')}</div>`;
+    return;
+  }
+  el.innerHTML=achieved.map(g=>{
+    const totalH=Math.round(goalTotalMin(g)/60);
+    const doneMin=goalDoneMin(g);
+    const doneH=(doneMin/60).toFixed(1);
+    // 達成日を履歴から推定（goalId一致 or 全体、目標時間を超えた最初のセッション）
+    let achDate='';
+    let cumMin=0;
+    const sorted=[...hist].filter(s=>s.ts>=(g.createdAt||0)&&(s.goalId===String(g.id)||!s.goalId)).sort((a,b)=>a.ts-b.ts);
+    for(const s of sorted){
+      cumMin+=Math.round(s.dur/60);
+      if(cumMin>=goalTotalMin(g)){
+        const d=new Date(s.ts);
+        achDate=`${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`;
+        break;
+      }
+    }
+    const meta=[
+      achDate?(lang==='zh'?`达成日: ${achDate}`:`達成日: ${achDate}`):'',
+      `${totalH}${t('ach_hours')}`,
+      g.days?`${g.days}${t('ach_days')}`:'',
+    ].filter(Boolean).join(' · ');
+    return`<div class="ach-item">
+      <div class="ach-icon">🏆</div>
+      <div class="ach-info">
+        <div class="ach-subject">${esc(g.subject)}</div>
+        <div class="ach-meta">${meta}</div>
+      </div>
+      <div class="ach-badge">🎉 ${lang==='zh'?'达成':'達成'}</div>
+    </div>`;
+  }).join('');
+}
+
 // 金色記念日管理
 let goldDays=JSON.parse(localStorage.getItem('pomo-gold')||'{}');
 function saveGold(){localStorage.setItem('pomo-gold',JSON.stringify(goldDays));}
@@ -995,18 +1147,33 @@ function goldKey(y,m,d){return`${y}-${m}-${d}`;}
 
 function getCD(){const d={};hist.forEach(s=>{const sd=new Date(s.ts);const k=sd.getFullYear()+'-'+(sd.getMonth()+1)+'-'+sd.getDate();d[k]=(d[k]||0)+Math.round(s.dur/60);});return d;}
 // 新基準: 0=白, 1~30=薄青, 31~60=青, 61~90=中青, 91+=濃青
+// テーマに合わせたカレンダー色を返す
+function getCalColors(){
+  const th=THEMES.find(x=>x.id===activeTheme)||THEMES[0];
+  const [c3,c2,c1]=th.dots; // dots は [濃, 中, 薄] の順
+  // 薄→中→濃→最濃 の4段階を生成
+  return[c1, c2, c3, c3+'CC']; // [薄, 中, 濃, 最濃(濃+透明度)]
+}
 function calCol(m,isGold){
-  if(isGold)return'#D4A017'; // 金色
-  if(m===0)return'#F1F5F9';
-  if(m<=30)return'#BFDBFE';
-  if(m<=60)return'#93C5FD';
-  if(m<=90)return'#3B82F6';
-  return'#1D4ED8';
+  if(isGold)return'#D4A017';
+  if(m===0)return'var(--bg2)';
+  const cols=getCalColors();
+  if(m<=30)return cols[0];
+  if(m<=60)return cols[1];
+  if(m<=90)return cols[2];
+  return cols[3];
 }
 function calTextCol(m,isGold){
   if(isGold)return'white';
   if(m>=31)return'white';
-  return'#64748B';
+  return'var(--text2)';
+}
+function updateCalLegend(){
+  const cols=getCalColors();
+  [1,2,3,4].forEach((i,idx)=>{
+    const el=document.getElementById('cld-'+i);
+    if(el)el.style.background=cols[idx];
+  });
 }
 function renderCal(){
   const data=getCD(),now=new Date();
@@ -1385,9 +1552,20 @@ function addSubgoal(gid){
 function delSubgoal(gid,sgid){
   const g=goals.find(x=>String(x.id)===String(gid));
   if(!g||!g.subgoals)return;
-  snapSubgoal(gid);
+  // スナップショットを先に保存（まだ表示はしない）
+  sgSnap=JSON.stringify(g.subgoals||[]);
+  sgSnapGid=gid;
+  clearTimeout(sgUndoTmr);
+  // ミニ目標を削除してモーダルを再描画
   g.subgoals=g.subgoals.filter(s=>String(s.id)!==String(sgid));
   sg();renderGoalModal(g);renderGoals();
+  // 再描画後にundoバーを表示・タイマーセット
+  sgUndoTmr=setTimeout(()=>{sgSnap=null;showSgUndoBar(false);},8000);
+  const msg=document.getElementById('sg-undo-msg');
+  if(msg)msg.textContent=lang==='zh'?'已删除子目标':'ミニ目標を削除しました';
+  const btn=document.getElementById('sg-undo-btn');
+  if(btn)btn.textContent='↩ '+(lang==='zh'?'撤销':'元に戻す');
+  showSgUndoBar(true);
 }
 function updateTGB(){
   const bar=document.getElementById('tgb');
@@ -1483,19 +1661,19 @@ function buyItem(type,id,price){
   localStorage.setItem('pomo-coins',coins);
   toast(t('toast_bought'));renderShop();
 }
-function useTheme(id){applyTheme(id);toast(t('toast_applied'));renderShop();renderThemeRows();}
-function useSkin(id){applySkin(id);toast(t('toast_applied'));renderShop();renderSkinRows();}
+function useTheme(id){applyTheme(id);toast(t('toast_applied'));renderShop();renderThemeRows();if(typeof saveToCloud==='function')saveToCloud();}
+function useSkin(id){applySkin(id);toast(t('toast_applied'));renderShop();renderSkinRows();if(typeof saveToCloud==='function')saveToCloud();}
 
 // ── SETTINGS ──
 function loadSettings(){
-  document.getElementById('sv-focus').textContent=cfg.focus+t('min_unit');
-  document.getElementById('sv-short').textContent=cfg.short+t('min_unit');
-  document.getElementById('sv-long').textContent=cfg.long+t('min_unit');
-  document.getElementById('tog-brk').checked=cfg.autoBreak;
-  document.getElementById('tog-foc').checked=cfg.autoFocus;
-  document.getElementById('lang-sel').value=lang;
-  document.getElementById('vol-slider').value=alarmVol;
-  document.getElementById('vol-val').textContent=alarmVol+'%';
+  const sf=document.getElementById('sv-focus');if(sf)sf.textContent=cfg.focus+t('min_unit');
+  const ss=document.getElementById('sv-short');if(ss)ss.textContent=cfg.short+t('min_unit');
+  const sl=document.getElementById('sv-long');if(sl)sl.textContent=cfg.long+t('min_unit');
+  const tb=document.getElementById('tog-brk');if(tb)tb.checked=cfg.autoBreak;
+  const tf=document.getElementById('tog-foc');if(tf)tf.checked=cfg.autoFocus;
+  const ls=document.getElementById('lang-sel');if(ls)ls.value=lang;
+  const vs=document.getElementById('vol-slider');if(vs)vs.value=alarmVol;
+  const vv=document.getElementById('vol-val');if(vv)vv.textContent=alarmVol+'%';
   renderThemeRows();renderSkinRows();
 }
 function renderThemeRows(){
@@ -1506,15 +1684,30 @@ function renderSkinRows(){
   const ow=SKINS.filter(sk=>ownedSkins.includes(sk.id));
   document.getElementById('skin-rows').innerHTML=ow.map(sk=>`<div class="theme-row-item${activeSkin===sk.id?' active-row':''}" onclick="useSkin('${sk.id}')"><div style="font-size:16px;width:20px;text-align:center">${sk.icon}</div><div class="trow-name">${sk.name[lang]||sk.name.ja}</div>${activeSkin===sk.id?`<span class="trow-check">✓</span>`:''}</div>`).join('');
 }
-function step(k,d){const lim={focus:[5,90],short:[1,30],long:[5,60]};cfg[k]=Math.min(lim[k][1],Math.max(lim[k][0],cfg[k]+d));document.getElementById('sv-'+k).textContent=cfg[k]+t('min_unit');}
+function step(k,d){
+  const steps={focus:[5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90],short:[1,5,10,15,20,25,30],long:[5,10,15,20,25,30,35,40,45,50,55,60]};
+  const list=steps[k];
+  const cur=cfg[k];
+  let idx=list.indexOf(cur);
+  if(idx===-1){
+    // リストにない値の場合、最近傍を探す
+    idx=list.findIndex(v=>v>=cur);
+    if(idx===-1)idx=list.length-1;
+    else if(d<0)idx=Math.max(0,idx-1);
+  }else{
+    idx=Math.max(0,Math.min(list.length-1,idx+d));
+  }
+  cfg[k]=list[idx];
+  const el=document.getElementById('sv-'+k);if(el)el.textContent=cfg[k]+t('min_unit');
+}
 function saveSettings(){
   cfg.autoBreak=document.getElementById('tog-brk').checked;
   cfg.autoFocus=document.getElementById('tog-foc').checked;
   localStorage.setItem('pomo-cfg',JSON.stringify(cfg));
   if(!running){rem=tot(phase);drawT();}
-  toast(t('toast_saved'));
+  toast(t('toast_saved'));if(typeof saveToCloud==='function')saveToCloud();
 }
-function setLang(l){lang=l;localStorage.setItem('pomo-lang',l);applyI18n();loadSettings();}
+function setLang(l){lang=l;localStorage.setItem('pomo-lang',l);applyI18n();loadSettings();if(typeof saveToCloud==='function')saveToCloud();}
 function applyI18n(){
   document.querySelectorAll('[data-i]').forEach(el=>{const k=el.getAttribute('data-i');if(I18N[lang]&&I18N[lang][k])el.textContent=I18N[lang][k];});
   const inp=document.getElementById('todo-input');if(inp)inp.placeholder=t('todo_placeholder');
@@ -1532,7 +1725,23 @@ function removeTestRecord(){
   hist=hist.filter(s=>!s._test);
   sp();toast(before-hist.length>0?'テスト記録を削除しました':'テスト記録はありません');
 }
-function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2500);}
+function toast(msg){const el=document.getElementById('toast');if(!el)return;el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2500);}
+
+// Firebase関数のスタブ（loadイベント前に呼ばれても安全）
+function showAccountBar(v){
+  const bar=document.getElementById('account-bar');
+  if(bar)bar.style.display=v?'flex':'none';
+}
+function signInWithGoogle(){
+  if(window._fbSignIn)window._fbSignIn();
+  else toast('読み込み中です。少し待ってからお試しください。');
+}
+function skipAuth(){
+  const o=document.getElementById('auth-overlay');if(o)o.style.display='none';
+}
+function signOut(){
+  if(window._fbSignOut)window._fbSignOut();
+}
 
 // ── INIT ──
 applySkin(activeSkin);
@@ -1541,7 +1750,144 @@ applyI18n();
 setMode(timerMode);
 drawT();
 updateTGB();
-setAvgPeriod(avgPeriod);
+renderStats();
+
+// ── FIREBASE（全変数宣言の後で初期化）──
+window.addEventListener('load', ()=>{
+  if(typeof firebase==='undefined'){
+    // Firebase SDKが読み込めていない場合はスキップ
+    document.getElementById('auth-overlay').style.display='none';
+    return;
+  }
+  const firebaseConfig={
+    apiKey:"AIzaSyDFgzkqjqx1NwI1AgbZ4XQ24-la5ebx0wk",
+    authDomain:"pomodoro-app-9cd6d.firebaseapp.com",
+    projectId:"pomodoro-app-9cd6d",
+    storageBucket:"pomodoro-app-9cd6d.firebasestorage.app",
+    messagingSenderId:"676951598337",
+    appId:"1:676951598337:web:18df8eb3d28bbfaf0b6700"
+  };
+  if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
+  const auth=firebase.auth();
+  const db=firebase.firestore();
+  let currentUser=null;
+  let syncTimeout=null;
+
+  window._fbSignIn=function(){
+    const provider=new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).catch(e=>toast('ログインに失敗しました'));
+  };
+  window._fbSignOut=function(){
+    auth.signOut().then(()=>{
+      currentUser=null;
+      showAccountBar(false);
+      const ao=document.getElementById('auth-overlay');if(ao)ao.style.display='flex';
+      updateSettingsAuth(null);
+      toast('ログアウトしました');
+    });
+  };
+  window.signInWithGoogle=window._fbSignIn;
+  window.signOut=window._fbSignOut;
+
+  function setSyncing(v){
+    const dot=document.getElementById('sync-dot');
+    if(dot)dot.className='sync-dot'+(v?' syncing':'');
+  }
+
+  window.saveToCloud=function(){
+    if(!currentUser)return;
+    clearTimeout(syncTimeout);
+    syncTimeout=setTimeout(async()=>{
+      setSyncing(true);
+      try{
+        await db.collection('users').doc(currentUser.uid).collection('data').doc('main').set({
+          hist,goals,todos,coins,cfg,
+          activeGoalId,activeMiniId,goldDays,
+          owned,ownedSkins,activeTheme,activeSkin,
+          lang,alarmVol,
+          updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+        });
+        setSyncing(false);
+      }catch(e){setSyncing(false);console.error('save error',e);}
+    },2000);
+  };
+
+  // 設定タブのアカウントUIを更新する関数
+  function updateSettingsAuth(user){
+    const loggedIn=document.getElementById('set-logged-in');
+    const loggedOut=document.getElementById('set-logged-out');
+    if(!loggedIn||!loggedOut)return;
+    if(user){
+      loggedIn.style.display='block';
+      loggedOut.style.display='none';
+      const un=document.getElementById('set-username');if(un)un.textContent=user.displayName||'';
+      const em=document.getElementById('set-email');if(em)em.textContent=user.email||'';
+      const av=document.getElementById('set-avatar');if(av&&user.photoURL)av.src=user.photoURL;
+    }else{
+      loggedIn.style.display='none';
+      loggedOut.style.display='block';
+    }
+  }
+
+  // setSyncingを設定タブのドットにも反映
+  const _setSyncing=setSyncing;
+  setSyncing=function(v){
+    _setSyncing(v);
+    const d=document.getElementById('set-sync-dot');if(d)d.className='sync-dot'+(v?' syncing':'');
+  };
+
+  auth.onAuthStateChanged(async user=>{
+    if(user){
+      currentUser=user;
+      document.getElementById('auth-overlay').style.display='none';
+      showAccountBar(true);
+      document.getElementById('account-name').textContent=user.displayName||user.email;
+      const av=document.getElementById('account-avatar');
+      if(user.photoURL)av.src=user.photoURL; else av.style.display='none';
+      updateSettingsAuth(user);
+      // クラウドからデータ読み込み
+      setSyncing(true);
+      try{
+        const doc=await db.collection('users').doc(user.uid).collection('data').doc('main').get();
+        if(doc.exists){
+          const d=doc.data();
+          if(d.hist)hist=d.hist;
+          if(d.goals)goals=d.goals;
+          if(d.todos)todos=d.todos;
+          if(d.coins!==undefined)coins=d.coins;
+          if(d.cfg)cfg={...cfg,...d.cfg};
+          if(d.activeGoalId!==undefined)activeGoalId=d.activeGoalId;
+          if(d.activeMiniId!==undefined)activeMiniId=d.activeMiniId;
+          if(d.goldDays)goldDays=d.goldDays;
+          if(d.owned)owned=d.owned;
+          if(d.ownedSkins)ownedSkins=d.ownedSkins;
+          if(d.activeTheme){activeTheme=d.activeTheme;applyTheme(d.activeTheme);}
+          if(d.activeSkin){activeSkin=d.activeSkin;applySkin(d.activeSkin);}
+          if(d.lang){lang=d.lang;applyI18n();}
+          if(d.alarmVol!==undefined)alarmVol=d.alarmVol;
+          drawT();updateTGB();
+          const cd=document.getElementById('coin-disp');if(cd)cd.textContent=coins;
+        }
+        setSyncing(false);
+        toast('☁️ データを同期しました');
+      }catch(e){setSyncing(false);console.error('load error',e);}
+    }else{
+      currentUser=null;
+      updateSettingsAuth(null);
+    }
+  });
+
+  window._fbSignOut=function(){
+    auth.signOut().then(()=>{
+      currentUser=null;
+      showAccountBar(false);
+      const ao=document.getElementById('auth-overlay');if(ao)ao.style.display='flex';
+      updateSettingsAuth(null);
+      toast('ログアウトしました');
+    });
+  };
+  window.signOut=window._fbSignOut;
+});
 </script>
 </body>
 </html>
