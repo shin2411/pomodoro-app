@@ -111,7 +111,7 @@ body.skin-cherry .tnum{color:#4A2800}
 body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F1F5F9;display:flex;align-items:flex-start;justify-content:center;min-height:100vh;padding:24px 16px}
 .app{width:100%;max-width:420px;background:var(--bg);border-radius:var(--radius,16px);border:1px solid var(--border);overflow:hidden}
 /* TABS */
-.tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-bottom:1px solid var(--border);overflow:hidden;scrollbar-width:none}
+.tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-bottom:1px solid var(--border);overflow:hidden;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{width:100%;min-width:0;padding:13px 4px 11px;font-size:10px;font-weight:500;text-align:center;color:var(--text3);background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;letter-spacing:.3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
 .tab svg{opacity:.4;transition:opacity .2s}
@@ -167,7 +167,7 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
 .sval{font-size:24px;font-weight:600;color:var(--text);line-height:1}.slbl2{font-size:12px;color:var(--text3);margin-top:4px}
 .ccard{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px}
 .cttl{font-size:13px;font-weight:500;color:var(--text);margin-bottom:14px}
-.bars{display:flex;align-items:flex-end;gap:3px;height:120px;position:relative;padding-top:16px;padding-left:28px}
+.bars{display:flex;align-items:flex-end;gap:3px;height:120px;position:relative;padding-top:16px;padding-left:28px;padding-right:28px}
 .bars-grid{position:absolute;inset:16px 0 22px 28px;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
 .bars-grid-line{width:100%;border-top:1px dashed var(--border);position:relative}
 .bars-grid-lbl{position:absolute;left:-26px;top:-8px;font-size:9px;color:var(--text3);width:24px;text-align:right}
@@ -303,6 +303,34 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
 .dm-idx{width:22px;height:22px;border-radius:50%;background:var(--acc-lt);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--acc);flex-shrink:0}
 .dm-dur{font-size:14px;font-weight:500;color:var(--text)}.dm-time{font-size:12px;color:var(--text3);margin-top:1px}
 .day-modal-empty{text-align:center;padding:24px;color:var(--text3);font-size:13px}
+/* ACHIEVEMENT */
+.ach-page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.ach-page-title{font-size:16px;font-weight:600;color:var(--text)}
+.ach-page-count{font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:4px 12px}
+.ach-page-count span{font-weight:600;color:var(--acc)}
+.ach-grid{display:grid;grid-template-columns:1fr;gap:8px}
+.ach-card-item{border:1.5px solid var(--border);border-radius:12px;padding:12px 16px;cursor:pointer;transition:border-color .2s,background .2s;background:var(--bg);display:flex;align-items:center;gap:12px;text-align:left}
+.ach-card-item.unlocked{border-color:var(--acc);background:var(--acc-lt)}
+.ach-card-item.locked{opacity:.5;cursor:pointer}
+.ach-card-icon{font-size:22px;flex-shrink:0;width:32px;text-align:center}
+.ach-card-name{font-size:13px;font-weight:600;color:var(--text);flex:1}
+.ach-card-date{font-size:10px;color:var(--acc);margin-top:0;flex-shrink:0}
+.ach-modal-icon{font-size:48px;text-align:center;margin-bottom:12px}
+.ach-modal-name{font-size:16px;font-weight:700;color:var(--text);text-align:center;margin-bottom:6px}
+.ach-modal-desc{font-size:13px;color:var(--text2);text-align:center;margin-bottom:10px;line-height:1.6}
+.ach-modal-hint{font-size:12px;color:var(--text3);background:var(--bg2);border-radius:8px;padding:10px;text-align:center;line-height:1.6}
+.ach-modal-date{font-size:12px;color:var(--acc);text-align:center;font-weight:500;margin-top:8px}
+/* ACHIEVEMENT BANNER */
+.ach-banner{position:fixed;top:-80px;left:50%;transform:translateX(-50%);
+  background:var(--text);color:white;border-radius:14px;padding:10px 18px;
+  display:flex;align-items:center;gap:10px;z-index:200;
+  box-shadow:0 4px 20px rgba(0,0,0,.25);transition:top .4s cubic-bezier(.34,1.56,.64,1);
+  min-width:240px;max-width:340px;white-space:nowrap}
+.ach-banner.show{top:16px}
+.ach-banner-icon{font-size:22px;flex-shrink:0}
+.ach-banner-text{display:flex;flex-direction:column;gap:1px;overflow:hidden}
+.ach-banner-label{font-size:10px;opacity:.7;letter-spacing:.5px}
+.ach-banner-name{font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis}
 /* TOAST */
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(6px);background:var(--text);color:white;padding:10px 20px;border-radius:20px;font-size:12px;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;white-space:nowrap;z-index:99}
 /* GOAL */
@@ -435,6 +463,10 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
     <button class="tab" onclick="nav('shop',this)">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
       <span data-i="tab_shop">店</span>
+    </button>
+    <button class="tab" onclick="nav('achieve',this)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.11"/></svg>
+      <span data-i="tab_achieve">実績</span>
     </button>
     <button class="tab" onclick="nav('settings',this)">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -622,6 +654,17 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
     </div>
   </div>
 
+  <!-- ACHIEVE -->
+  <div id="page-achieve" class="page">
+    <div class="ach-page-header">
+      <div class="ach-page-title" data-i="tab_achieve">実績</div>
+      <div class="ach-page-count">
+        <span id="ach-unlocked-count">0</span> / <span id="ach-total-count">0</span> 解放済み
+      </div>
+    </div>
+    <div class="ach-grid" id="ach-grid"></div>
+  </div>
+
   <!-- SETTINGS -->
   <div id="page-settings" class="page">
     <div class="ssec">
@@ -706,6 +749,13 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
   </div>
 </div>
 <div class="toast" id="toast"></div>
+<div class="ach-banner" id="ach-banner">
+  <div class="ach-banner-icon" id="ach-banner-icon">⭐</div>
+  <div class="ach-banner-text">
+    <div class="ach-banner-label">🏅 実績解放！</div>
+    <div class="ach-banner-name" id="ach-banner-name"></div>
+  </div>
+</div>
 
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -714,8 +764,8 @@ body {font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgro
 <script>
 // ── I18N ──
 const I18N={
-  ja:{tab_timer:'タイマー',tab_record:'記録',tab_todo:'目標',tab_shop:'店',tab_settings:'設定',tab_history:'履歴',tab_stats:'統計',mode_cd:'カウントダウン',mode_cu:'カウントアップ',coin_label:'コイン',stat_total:'総集中時間（分）',stat_sessions:'完了セッション',stat_avg:'1回あたりの平均集中時間',stat_today:'今日のセッション',chart_week:'今週の集中時間（分）',cal_legend:'集中時間:',cal_less:'少 → 多',cp_today:'今日',cp_week:'今週',cp_month:'今月',cp_title_today:'今日の集中時間（分）',cp_title_week:'今週の集中時間（分）',cp_title_month:'今月の集中時間（分）',shop_title:'ショップ',shop_themes:'カラーテーマ',shop_skins:'スキン',set_timer:'タイマー時間',set_focus:'集中',set_short:'小休憩',set_long:'長休憩',set_auto:'自動スタート',set_auto_break:'休憩を自動でスタート',set_auto_focus:'集中を自動でスタート',set_alarm:'アラーム音量',set_volume:'音量',set_test_alarm:'テスト再生',set_skin:'スキン',set_theme:'カラーテーマ',set_lang:'言語 / Language',set_lang_label:'言語',set_help:'ヘルプ',save_btn:'保存する',phase_focus:'集中',phase_short:'小休憩',phase_long:'長休憩',toast_complete:'セッション完了！',toast_break_end:'休憩終了！',toast_saved:'設定を保存しました',toast_bought:'購入しました！',toast_no_coins:'コインが足りません',toast_applied:'適用しました',min_unit:'分',times_unit:'回目',owned:'所持中',active_lbl:'使用中',buy:'購入する',use:'使う',free:'無料',history_empty:'まだセッションがありません',todo_placeholder:'新しいタスクを入力…',todo_add:'追加',todo_all:'すべて',todo_active:'未完了',todo_done:'完了',todo_clear_done:'完了済みを削除',todo_remaining:'件残り',todo_empty:'タスクがありません',goal_form_title:'新しい目標を追加',goal_subj_ph:'科目・テーマを入力',goal_days_unit:'日間',goal_hours_unit:'時間',goal_add_btn:'目標を追加',goal_use_mini:'ミニ目標で時間を管理する',goal_list_lbl:'目標一覧',todo_sec_lbl:'ToDo リスト',goal_empty:'目標がまだありません',goal_no_active:'目標を選択',tgb_label:'現在の目標',tgb_none:'目標なし',tgb_done:'🎉 目標達成！',tgb_remain:'あと {h} 時間で達成！',goal_progress:'{done} / {total} 時間',goal_active_now:'進行中',goal_day_unit:'日間',goal_done_badge:'🎉 達成！',stab_goal:'目標',stab_todo:'ToDo',gm_detail:'詳細を開く',gm_mini_title:'ミニ目標',gm_mini_ph:'ミニ目標の名前',gm_mini_add:'追加',gm_mini_empty:'ミニ目標がありません',gm_chart_bar:'棒グラフ',gm_chart_pie:'円グラフ',gm_main:'全体',gm_remain:'残り',tgb_mini_label:'ミニ目標',set_account:'☁️ アカウント',set_logout:'ログアウト',set_login_desc:'Googleアカウントでログインすると、どの端末でもデータを同期できます。',set_login_btn:'Googleでログイン',ach_title:'🏆 達成した目標',ach_empty:'まだ達成した目標はありません',ach_hours:'時間',ach_days:'日間'},
-  zh:{tab_timer:'计时器',tab_record:'记录',tab_todo:'目标',tab_shop:'商店',tab_settings:'设置',tab_history:'历史',tab_stats:'统计',mode_cd:'倒计时',mode_cu:'正计时',coin_label:'硬币',stat_total:'总专注时间（分）',stat_sessions:'完成场次',stat_avg:'每次平均专注时间',stat_today:'今日场次',chart_week:'本周专注时间（分）',cal_legend:'专注时间:',cal_less:'少 → 多',cp_today:'今日',cp_week:'本周',cp_month:'本月',cp_title_today:'今日专注时间（分）',cp_title_week:'本周专注时间（分）',cp_title_month:'本月专注时间（分）',shop_title:'商店',shop_themes:'颜色主题',shop_skins:'样式',set_timer:'计时设置',set_focus:'专注',set_short:'短休息',set_long:'长休息',set_auto:'自动开始',set_auto_break:'自动开始休息',set_auto_focus:'自动开始专注',set_alarm:'闹钟音量',set_volume:'音量',set_test_alarm:'测试播放',set_skin:'样式',set_theme:'颜色主题',set_lang:'言語 / Language',set_lang_label:'语言',set_help:'帮助',save_btn:'保存',phase_focus:'专注',phase_short:'短休息',phase_long:'长休息',toast_complete:'场次完成！',toast_break_end:'休息结束！',toast_saved:'设置已保存',toast_bought:'购买成功！',toast_no_coins:'硬币不足',toast_applied:'已应用',min_unit:'分',times_unit:'次',owned:'已拥有',active_lbl:'使用中',buy:'购买',use:'使用',free:'免费',history_empty:'还没有记录',todo_placeholder:'输入新任务…',todo_add:'添加',todo_all:'全部',todo_active:'未完成',todo_done:'已完成',todo_clear_done:'删除已完成',todo_remaining:'项未完成',todo_empty:'没有任务',goal_form_title:'添加新目标',goal_subj_ph:'输入科目或主题',goal_days_unit:'天',goal_hours_unit:'小时',goal_add_btn:'添加目标',goal_use_mini:'用子目标管理时间',goal_list_lbl:'目标列表',todo_sec_lbl:'待办清单',goal_empty:'还没有目标',goal_no_active:'选择目标',tgb_label:'当前目标',tgb_none:'无目标',tgb_done:'🎉 目标达成！',tgb_remain:'还差 {h} 小时！',goal_progress:'已学 {done} / 目标 {total} 小时',goal_active_now:'进行中',goal_day_unit:'天',goal_done_badge:'🎉 达成！',stab_goal:'目标',stab_todo:'待办',gm_detail:'查看详情',gm_mini_title:'子目标',gm_mini_ph:'子目标名称',gm_mini_add:'添加',gm_mini_empty:'还没有子目标',gm_chart_bar:'柱状图',gm_chart_pie:'饼图',gm_main:'总体',gm_remain:'剩余',tgb_mini_label:'子目标',set_account:'☁️ 账户',set_logout:'退出登录',set_login_desc:'使用Google账户登录，可在任意设备同步数据。',set_login_btn:'使用Google登录',ach_title:'🏆 已达成目标',ach_empty:'还没有达成的目标',ach_hours:'小时',ach_days:'天'}
+  ja:{tab_timer:'タイマー',tab_record:'記録',tab_todo:'目標',tab_shop:'店',tab_achieve:'実績',tab_settings:'設定',tab_history:'履歴',tab_stats:'統計',mode_cd:'カウントダウン',mode_cu:'カウントアップ',coin_label:'コイン',stat_total:'総集中時間（分）',stat_sessions:'完了セッション',stat_avg:'1回あたりの平均集中時間',stat_today:'今日のセッション',chart_week:'今週の集中時間（分）',cal_legend:'集中時間:',cal_less:'少 → 多',cp_today:'今日',cp_week:'今週',cp_month:'今月',cp_title_today:'今日の集中時間（分）',cp_title_week:'今週の集中時間（分）',cp_title_month:'今月の集中時間（分）',shop_title:'ショップ',shop_themes:'カラーテーマ',shop_skins:'スキン',set_timer:'タイマー時間',set_focus:'集中',set_short:'小休憩',set_long:'長休憩',set_auto:'自動スタート',set_auto_break:'休憩を自動でスタート',set_auto_focus:'集中を自動でスタート',set_alarm:'アラーム音量',set_volume:'音量',set_test_alarm:'テスト再生',set_skin:'スキン',set_theme:'カラーテーマ',set_lang:'言語 / Language',set_lang_label:'言語',set_help:'ヘルプ',save_btn:'保存する',phase_focus:'集中',phase_short:'小休憩',phase_long:'長休憩',toast_complete:'セッション完了！',toast_break_end:'休憩終了！',toast_saved:'設定を保存しました',toast_bought:'購入しました！',toast_no_coins:'コインが足りません',toast_applied:'適用しました',min_unit:'分',times_unit:'回目',owned:'所持中',active_lbl:'使用中',buy:'購入する',use:'使う',free:'無料',history_empty:'まだセッションがありません',todo_placeholder:'新しいタスクを入力…',todo_add:'追加',todo_all:'すべて',todo_active:'未完了',todo_done:'完了',todo_clear_done:'完了済みを削除',todo_remaining:'件残り',todo_empty:'タスクがありません',goal_form_title:'新しい目標を追加',goal_subj_ph:'科目・テーマを入力',goal_days_unit:'日間',goal_hours_unit:'時間',goal_add_btn:'目標を追加',goal_use_mini:'ミニ目標で時間を管理する',goal_list_lbl:'目標一覧',todo_sec_lbl:'ToDo リスト',goal_empty:'目標がまだありません',goal_no_active:'目標を選択',tgb_label:'現在の目標',tgb_none:'目標なし',tgb_done:'🎉 目標達成！',tgb_remain:'あと {h} 時間で達成！',goal_progress:'{done} / {total} 時間',goal_active_now:'進行中',goal_day_unit:'日間',goal_done_badge:'🎉 達成！',stab_goal:'目標',stab_todo:'ToDo',gm_detail:'詳細を開く',gm_mini_title:'ミニ目標',gm_mini_ph:'ミニ目標の名前',gm_mini_add:'追加',gm_mini_empty:'ミニ目標がありません',gm_chart_bar:'棒グラフ',gm_chart_pie:'円グラフ',gm_main:'全体',gm_remain:'残り',tgb_mini_label:'ミニ目標',set_account:'☁️ アカウント',set_logout:'ログアウト',set_login_desc:'Googleアカウントでログインすると、どの端末でもデータを同期できます。',set_login_btn:'Googleでログイン',ach_title:'🏆 達成した目標',ach_empty:'まだ達成した目標はありません',ach_hours:'時間',ach_days:'日間'},
+  zh:{tab_timer:'计时器',tab_record:'记录',tab_todo:'目标',tab_shop:'商店',tab_achieve:'成就',tab_settings:'设置',tab_history:'历史',tab_stats:'统计',mode_cd:'倒计时',mode_cu:'正计时',coin_label:'硬币',stat_total:'总专注时间（分）',stat_sessions:'完成场次',stat_avg:'每次平均专注时间',stat_today:'今日场次',chart_week:'本周专注时间（分）',cal_legend:'专注时间:',cal_less:'少 → 多',cp_today:'今日',cp_week:'本周',cp_month:'本月',cp_title_today:'今日专注时间（分）',cp_title_week:'本周专注时间（分）',cp_title_month:'本月专注时间（分）',shop_title:'商店',shop_themes:'颜色主题',shop_skins:'样式',set_timer:'计时设置',set_focus:'专注',set_short:'短休息',set_long:'长休息',set_auto:'自动开始',set_auto_break:'自动开始休息',set_auto_focus:'自动开始专注',set_alarm:'闹钟音量',set_volume:'音量',set_test_alarm:'测试播放',set_skin:'样式',set_theme:'颜色主题',set_lang:'言語 / Language',set_lang_label:'语言',set_help:'帮助',save_btn:'保存',phase_focus:'专注',phase_short:'短休息',phase_long:'长休息',toast_complete:'场次完成！',toast_break_end:'休息结束！',toast_saved:'设置已保存',toast_bought:'购买成功！',toast_no_coins:'硬币不足',toast_applied:'已应用',min_unit:'分',times_unit:'次',owned:'已拥有',active_lbl:'使用中',buy:'购买',use:'使用',free:'免费',history_empty:'还没有记录',todo_placeholder:'输入新任务…',todo_add:'添加',todo_all:'全部',todo_active:'未完成',todo_done:'已完成',todo_clear_done:'删除已完成',todo_remaining:'项未完成',todo_empty:'没有任务',goal_form_title:'添加新目标',goal_subj_ph:'输入科目或主题',goal_days_unit:'天',goal_hours_unit:'小时',goal_add_btn:'添加目标',goal_use_mini:'用子目标管理时间',goal_list_lbl:'目标列表',todo_sec_lbl:'待办清单',goal_empty:'还没有目标',goal_no_active:'选择目标',tgb_label:'当前目标',tgb_none:'无目标',tgb_done:'🎉 目标达成！',tgb_remain:'还差 {h} 小时！',goal_progress:'已学 {done} / 目标 {total} 小时',goal_active_now:'进行中',goal_day_unit:'天',goal_done_badge:'🎉 达成！',stab_goal:'目标',stab_todo:'待办',gm_detail:'查看详情',gm_mini_title:'子目标',gm_mini_ph:'子目标名称',gm_mini_add:'添加',gm_mini_empty:'还没有子目标',gm_chart_bar:'柱状图',gm_chart_pie:'饼图',gm_main:'总体',gm_remain:'剩余',tgb_mini_label:'子目标',set_account:'☁️ 账户',set_logout:'退出登录',set_login_desc:'使用Google账户登录，可在任意设备同步数据。',set_login_btn:'使用Google登录',ach_title:'🏆 已达成目标',ach_empty:'还没有达成的目标',ach_hours:'小时',ach_days:'天'}
 };
 
 const HELP_CONTENT={
@@ -788,6 +838,7 @@ let todos=JSON.parse(localStorage.getItem('pomo-todos')||'[]');
 let goals=JSON.parse(localStorage.getItem('pomo-goals')||'[]');
 let activeGoalId=localStorage.getItem('pomo-active-goal')||'';
 let activeMiniId=localStorage.getItem('pomo-active-mini')||'';
+let achieveData=JSON.parse(localStorage.getItem('pomo-achieve')||'{}');
 let todoFilter='all';
 let timerMode='cd';
 let running=false,iv=null,sessions=0,phase='focus',rem=cfg.focus*60,secSess=0,coinSess=0;
@@ -827,6 +878,11 @@ window.addEventListener('beforeunload',()=>{
 let audioCtx=null;
 function getCtx(){if(!audioCtx||audioCtx.state==='closed')audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
 function playAlarm(){
+  if(alarmVol===0){
+    achieveData['silent_alarm_triggered']=true;
+    saveAchieve();
+    checkAchievements();
+  }
   const ctx=getCtx();
   if(ctx.state==='suspended')ctx.resume();
   const vol=alarmVol/100;
@@ -919,6 +975,7 @@ function finish(){
     sp();toast(t('toast_complete')+' '+sessions+t('times_unit'));
   }else toast(t('toast_break_end'));
   checkGoalBonus();
+  checkAchievements();
   const next=phase==='focus'?(sessions%4===0?'long':'short'):'focus';phase=next;rem=tot(next);cuSec=0;drawT();
   const auto=next==='focus'?cfg.autoFocus:cfg.autoBreak;if(auto)setTimeout(()=>{if(!running)toggleTimer();},1000);
 }
@@ -932,6 +989,7 @@ function checkGoalBonus(){
   if(doneMin>=totalMin){
     g.bonusGiven=true;
     sg();
+    checkAchievements();
     setTimeout(()=>{
       toast(lang==='zh'?'🎉 目标达成！':'🎉 目標達成！');
       updateTGB();
@@ -957,6 +1015,7 @@ function nav(id,btn){
   if(id==='todo'){renderGoals();}
   if(id==='shop'){renderShop();shopSubTab('themes');}
   if(id==='settings')loadSettings();
+  if(id==='achieve')renderAchievePage();
 }
 function shopSubTab(id){
   ['themes','skins'].forEach(k=>{
@@ -1343,6 +1402,7 @@ function addGoal(){
   goals.unshift(g);
   if(!activeGoalId)activeGoalId=String(g.id);
   sg();
+  checkAchievements();
 
   // フォームリセット
   document.getElementById('g-subj').value='';
@@ -1706,6 +1766,7 @@ function buyItem(type,id,price){
   else if(type==='skin'){ownedSkins.push(id);localStorage.setItem('pomo-skins',JSON.stringify(ownedSkins));useSkin(id);}
   localStorage.setItem('pomo-coins',coins);
   toast(t('toast_bought'));renderShop();
+  checkAchievements();
 }
 function useTheme(id){applyTheme(id);toast(t('toast_applied'));renderShop();renderThemeRows();if(typeof saveToCloud==='function')saveToCloud();}
 function useSkin(id){applySkin(id);toast(t('toast_applied'));renderShop();renderSkinRows();if(typeof saveToCloud==='function')saveToCloud();}
@@ -1768,14 +1829,26 @@ function step(k,d){
   cfg[k]=list[idx];
   const el=document.getElementById('sv-'+k);if(el)el.textContent=cfg[k]+t('min_unit');
 }
+let _saveTs=[];
 function saveSettings(){
   cfg.autoBreak=document.getElementById('tog-brk').checked;
   cfg.autoFocus=document.getElementById('tog-foc').checked;
   localStorage.setItem('pomo-cfg',JSON.stringify(cfg));
   if(!running){rem=tot(phase);drawT();}
   toast(t('toast_saved'));if(typeof saveToCloud==='function')saveToCloud();
+  // 保存しまくり実績チェック
+  const now=Date.now();
+  _saveTs.push(now);
+  _saveTs=_saveTs.filter(t2=>now-t2<=5000);
+  if(_saveTs.length>=10&&!achieveData['save_spam_triggered']){
+    achieveData['save_spam_triggered']=true;saveAchieve();checkAchievements();
+  }
 }
-function setLang(l){lang=l;localStorage.setItem('pomo-lang',l);applyI18n();loadSettings();if(typeof saveToCloud==='function')saveToCloud();}
+function setLang(l){
+  lang=l;localStorage.setItem('pomo-lang',l);
+  if(l==='zh'){achieveData['lang_zh_triggered']=true;saveAchieve();checkAchievements();}
+  applyI18n();loadSettings();if(typeof saveToCloud==='function')saveToCloud();
+}
 function applyI18n(){
   document.querySelectorAll('[data-i]').forEach(el=>{const k=el.getAttribute('data-i');if(I18N[lang]&&I18N[lang][k])el.textContent=I18N[lang][k];});
   const inp=document.getElementById('todo-input');if(inp)inp.placeholder=t('todo_placeholder');
@@ -1814,7 +1887,144 @@ function signOut(){
 
 // ── INIT ──
 applySkin(activeSkin);
-applyTheme(activeTheme);
+// ── ACHIEVEMENTS ──
+const ACHIEVEMENTS=[
+  // ⏱ セッション数
+  {id:'sess_1',   cat:'session',icon:'⭐',name:{ja:'はじめの一歩',zh:'第一步'},       desc:{ja:'1回セッションを完了した',zh:'完成了1次专注'},         hint:{ja:'まずは1回セッションを完了しよう！',zh:'先完成1次专注！'},          cond:s=>s.sessions>=1},
+  {id:'sess_5',   cat:'session',icon:'⭐',name:{ja:'ひよこ誕生',zh:'小鸡诞生'},       desc:{ja:'5回セッションを完了した',zh:'完成了5次专注'},           hint:{ja:'5回セッションを完了しよう！',zh:'完成5次专注！'},            cond:s=>s.sessions>=5},
+  {id:'sess_10',  cat:'session',icon:'⭐',name:{ja:'すくすく成長',zh:'茁壮成长'},     desc:{ja:'10回セッションを完了した',zh:'完成了10次专注'},          hint:{ja:'10回セッションを完了しよう！',zh:'完成10次专注！'},          cond:s=>s.sessions>=10},
+  {id:'sess_25',  cat:'session',icon:'⭐',name:{ja:'にわとり！',zh:'大公鸡！'},        desc:{ja:'25回セッションを完了した',zh:'完成了25次专注'},          hint:{ja:'25回セッションを完了しよう！',zh:'完成25次专注！'},          cond:s=>s.sessions>=25},
+  {id:'sess_50',  cat:'session',icon:'⭐',name:{ja:'猛禽の翼',zh:'雄鹰之翼'},         desc:{ja:'50回セッションを完了した',zh:'完成了50次专注'},          hint:{ja:'50回セッションを完了しよう！',zh:'完成50次专注！'},          cond:s=>s.sessions>=50},
+  {id:'sess_100', cat:'session',icon:'⭐',name:{ja:'百戦錬磨',zh:'百战不殆'},         desc:{ja:'100回セッションを完了した',zh:'完成了100次专注'},        hint:{ja:'100回セッションを完了しよう！',zh:'完成100次专注！'},        cond:s=>s.sessions>=100},
+  // ⌛ 累計集中時間
+  {id:'hour_1',   cat:'time',   icon:'⭐',name:{ja:'1時間達成',zh:'1小时达成'},        desc:{ja:'累計1時間集中した',zh:'累计专注1小时'},                  hint:{ja:'合計1時間集中しよう！',zh:'累计专注1小时！'},               cond:s=>s.totalMin>=60},
+  {id:'hour_5',   cat:'time',   icon:'⭐',name:{ja:'5時間の集中',zh:'5小时专注'},      desc:{ja:'累計5時間集中した',zh:'累计专注5小时'},                  hint:{ja:'合計5時間集中しよう！',zh:'累计专注5小时！'},               cond:s=>s.totalMin>=300},
+  {id:'hour_10',  cat:'time',   icon:'⭐',name:{ja:'10時間突破',zh:'突破10小时'},      desc:{ja:'累計10時間集中した',zh:'累计专注10小时'},                hint:{ja:'合計10時間集中しよう！',zh:'累计专注10小时！'},             cond:s=>s.totalMin>=600},
+  {id:'hour_25',  cat:'time',   icon:'⭐',name:{ja:'努力の塊',zh:'努力的象征'},         desc:{ja:'累計25時間集中した',zh:'累计专注25小时'},                hint:{ja:'合計25時間集中しよう！',zh:'累计专注25小时！'},             cond:s=>s.totalMin>=1500},
+  {id:'hour_50',  cat:'time',   icon:'⭐',name:{ja:'炎の集中力',zh:'燃烧的专注'},      desc:{ja:'累計50時間集中した',zh:'累计专注50小时'},                hint:{ja:'合計50時間集中しよう！',zh:'累计专注50小时！'},             cond:s=>s.totalMin>=3000},
+  {id:'hour_100', cat:'time',   icon:'⭐',name:{ja:'ダイヤモンド',zh:'钻石专注'},      desc:{ja:'累計100時間集中した',zh:'累计专注100小时'},              hint:{ja:'合計100時間集中しよう！',zh:'累计专注100小时！'},           cond:s=>s.totalMin>=6000},
+  {id:'hour_1000',cat:'time',   icon:'⭐',name:{ja:'努力の天才',zh:'努力的天才'},       desc:{ja:'累計1000時間集中した',zh:'累计专注1000小时'},             hint:{ja:'合計1000時間集中しよう！',zh:'累计专注1000小时！'},         cond:s=>s.totalMin>=60000},
+  // 🔥 連続日数
+  {id:'str_3',    cat:'streak', icon:'⭐',name:{ja:'3日連続',zh:'连续3天'},            desc:{ja:'3日連続で集中した',zh:'连续3天专注'},                    hint:{ja:'3日連続でセッションをこなそう！',zh:'连续3天完成专注！'},  cond:s=>s.streak>=3},
+  {id:'str_7',    cat:'streak', icon:'⭐',name:{ja:'1週間継続',zh:'坚持一周'},         desc:{ja:'7日連続で集中した',zh:'连续7天专注'},                    hint:{ja:'7日連続でセッションをこなそう！',zh:'连续7天完成专注！'},  cond:s=>s.streak>=7},
+  {id:'str_14',   cat:'streak', icon:'⭐',name:{ja:'2週間の習慣',zh:'两周习惯'},       desc:{ja:'14日連続で集中した',zh:'连续14天专注'},                  hint:{ja:'14日連続でセッションをこなそう！',zh:'连续14天完成专注！'},cond:s=>s.streak>=14},
+  {id:'str_30',   cat:'streak', icon:'⭐',name:{ja:'1ヶ月の王者',zh:'一月之王'},       desc:{ja:'30日連続で集中した',zh:'连续30天专注'},                  hint:{ja:'30日連続でセッションをこなそう！',zh:'连续30天完成专注！'},cond:s=>s.streak>=30},
+  // 🎯 目標
+  {id:'goal_first',cat:'goal',  icon:'⭐',name:{ja:'最初の目標',zh:'第一个目标'},      desc:{ja:'目標を初めて作った',zh:'创建了第一个目标'},              hint:{ja:'目標タブから目標を作ってみよう！',zh:'在目标页面创建一个目标！'},          cond:s=>s.goalsCreated>=1},
+  {id:'goal_1',   cat:'goal',   icon:'⭐',name:{ja:'初めての達成',zh:'初次达成'},      desc:{ja:'目標を1個達成した',zh:'达成了1个目标'},                  hint:{ja:'目標を設定して達成しよう！',zh:'设定并完成一个目标！'},     cond:s=>s.goalsCleared>=1},
+  {id:'goal_5',   cat:'goal',   icon:'⭐',name:{ja:'5冠達成',zh:'五冠达成'},           desc:{ja:'目標を5個達成した',zh:'达成了5个目标'},                  hint:{ja:'目標を5個達成しよう！',zh:'达成5个目标！'},               cond:s=>s.goalsCleared>=5},
+  {id:'goal_10',  cat:'goal',   icon:'⭐',name:{ja:'目標マスター',zh:'目标大师'},       desc:{ja:'目標を10個達成した',zh:'达成了10个目标'},                hint:{ja:'目標を10個達成しよう！',zh:'达成10个目标！'},             cond:s=>s.goalsCleared>=10},
+  // 💰 コイン
+  {id:'coin_100', cat:'coin',   icon:'⭐',name:{ja:'お金がたくさん',zh:'好多钱'},       desc:{ja:'コインを100枚以上所持した',zh:'持有100枚以上硬币'},      hint:{ja:'コインを100枚貯めよう！',zh:'攒够100枚硬币！'},            cond:s=>s.coins>=100},
+  {id:'coin_1000',cat:'coin',   icon:'⭐',name:{ja:'大金持ち',zh:'大富翁'},             desc:{ja:'コインを1000枚以上所持した',zh:'持有1000枚以上硬币'},    hint:{ja:'コインを1000枚貯めよう！',zh:'攒够1000枚硬币！'},          cond:s=>s.coins>=1000},
+  // 🎨 ショップ（テーマ）
+  {id:'theme_1',  cat:'shop',   icon:'⭐',name:{ja:'テーマ初購入',zh:'初购主题'},      desc:{ja:'カラーテーマを1個買った',zh:'购买了1个颜色主题'},        hint:{ja:'ショップでカラーテーマを買ってみよう！',zh:'在商店购买一个颜色主题！'},    cond:s=>s.ownedThemes>=1},
+  {id:'theme_5',  cat:'shop',   icon:'⭐',name:{ja:'テーマコレクター',zh:'主题收藏家'},desc:{ja:'カラーテーマを5個買った',zh:'购买了5个颜色主题'},        hint:{ja:'カラーテーマを5個集めよう！',zh:'收集5个颜色主题！'},                      cond:s=>s.ownedThemes>=5},
+  {id:'theme_all',cat:'shop',   icon:'⭐',name:{ja:'テーマコンプリート',zh:'主题全收'},desc:{ja:'カラーテーマをすべて買った',zh:'购买了所有颜色主题'},    hint:{ja:'カラーテーマをすべて集めよう！',zh:'收集所有颜色主题！'},                 cond:s=>s.ownedThemes>=15},
+  // 🧴 ショップ（スキン）
+  {id:'skin_1',   cat:'shop',   icon:'⭐',name:{ja:'スキン初購入',zh:'初购样式'},       desc:{ja:'スキンを1個買った',zh:'购买了1个样式'},                  hint:{ja:'ショップでスキンを買ってみよう！',zh:'在商店购买一个样式！'},            cond:s=>s.ownedSkins>=1},
+  {id:'skin_all', cat:'shop',   icon:'⭐',name:{ja:'スキンコンプリート',zh:'样式全收'},desc:{ja:'スキンをすべて買った',zh:'购买了所有样式'},              hint:{ja:'スキンをすべて集めよう！',zh:'收集所有样式！'},                           cond:s=>s.ownedSkins>=4},
+  // 🔍 隠し・特殊
+  {id:'silent_alarm',cat:'secret',icon:'⭐',name:{ja:'意味がない',zh:'没有意义'},      desc:{ja:'音量0でテスト再生した',zh:'音量为0时测试播放'},           hint:{ja:'アラーム音量を0にしてテスト再生してみよう…',zh:'把音量调到0再试试播放…'},cond:s=>s.silentAlarm},
+  {id:'lang_zh',  cat:'secret', icon:'⭐',name:{ja:'中国人？',zh:'你是中国人？'},       desc:{ja:'言語を中国語に変更した',zh:'将语言切换为中文'},           hint:{ja:'設定から言語を変えてみよう！',zh:'在设置里切换一下语言试试！'},          cond:s=>s.usedZh},
+  {id:'save_spam',cat:'secret', icon:'⭐',name:{ja:'保存しまくり',zh:'狂按保存'},       desc:{ja:'5秒以内に10回保存した',zh:'5秒内按了10次保存'},           hint:{ja:'設定の保存ボタンを素早く連打してみよう…',zh:'快速连按保存按钮试试…'},  cond:s=>s.saveSpam},
+];
+
+function saveAchieve(){localStorage.setItem('pomo-achieve',JSON.stringify(achieveData));}
+
+function getAchieveStats(){
+  const totalMin=hist.reduce((a,s)=>a+Math.round(s.dur/60),0);
+  const streak=calcStreak();
+  const goalsCleared=goals.filter(g=>g.bonusGiven).length;
+  const goalsCreated=goals.length;
+  const ownedThemes=owned.filter(id=>id!=='blue').length;
+  const ownedSkinsCount=(ownedSkins||[]).filter(id=>id!=='default').length;
+  const silentAlarm=!!achieveData['silent_alarm_triggered'];
+  const usedZh=!!achieveData['lang_zh_triggered'];
+  const saveSpam=!!achieveData['save_spam_triggered'];
+  return{sessions:hist.length, totalMin, streak, goalsCleared, goalsCreated, ownedThemes, ownedSkins:ownedSkinsCount, coins, silentAlarm, usedZh, saveSpam};
+}
+
+function calcStreak(){
+  if(!hist.length)return 0;
+  const days=new Set(hist.map(s=>{const d=new Date(s.ts);return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}));
+  let streak=0,cur=new Date();
+  while(true){
+    const key=cur.getFullYear()+'-'+(cur.getMonth()+1)+'-'+cur.getDate();
+    if(days.has(key)){streak++;cur.setDate(cur.getDate()-1);}
+    else break;
+  }
+  return streak;
+}
+
+function showAchBanner(a){
+  const banner=document.getElementById('ach-banner');
+  const nameEl=document.getElementById('ach-banner-name');
+  const label=banner.querySelector('.ach-banner-label');
+  if(!banner||!nameEl)return;
+  nameEl.textContent=a.name[lang]||a.name.ja;
+  label.textContent=lang==='zh'?'🏅 成就解锁！':'🏅 実績解放！';
+  banner.classList.add('show');
+  setTimeout(()=>banner.classList.remove('show'),3000);
+}
+function checkAchievements(){
+  const stats=getAchieveStats();
+  let newlyUnlocked=[];
+  ACHIEVEMENTS.forEach(a=>{
+    if(!achieveData[a.id]&&a.cond(stats)){
+      achieveData[a.id]={unlockedAt:Date.now()};
+      newlyUnlocked.push(a);
+    }
+  });
+  if(newlyUnlocked.length){
+    saveAchieve();
+    newlyUnlocked.forEach((a,i)=>{
+      setTimeout(()=>showAchBanner(a),i*3400);
+    });
+  }
+}
+
+function renderAchievePage(){
+  checkAchievements();
+  const total=ACHIEVEMENTS.length;
+  const unlocked=ACHIEVEMENTS.filter(a=>achieveData[a.id]).length;
+  document.getElementById('ach-unlocked-count').textContent=unlocked;
+  document.getElementById('ach-total-count').textContent=total;
+  const grid=document.getElementById('ach-grid');
+  grid.innerHTML=ACHIEVEMENTS.map(a=>{
+    const done=!!achieveData[a.id];
+    const dateStr=done?new Date(achieveData[a.id].unlockedAt).toLocaleDateString(lang==='zh'?'zh-CN':'ja-JP',{year:'numeric',month:'short',day:'numeric'}):'';
+    return`<div class="ach-card-item${done?' unlocked':' locked'}" onclick="openAchModal('${a.id}')">
+      <div class="ach-card-icon">${done?'⭐':'<span style="font-size:18px;color:var(--border)">○</span>'}</div>
+      <div class="ach-card-name">${a.name[lang]||a.name.ja}</div>
+      ${done?`<div class="ach-card-date">${dateStr}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function openAchModal(id){
+  const a=ACHIEVEMENTS.find(x=>x.id===id);if(!a)return;
+  const done=!!achieveData[id];
+  const dateStr=done?new Date(achieveData[id].unlockedAt).toLocaleDateString(lang==='zh'?'zh-CN':'ja-JP',{year:'numeric',month:'long',day:'numeric'}):'';
+  const bg=document.createElement('div');bg.className='day-modal-bg';
+  bg.innerHTML=`<div class="day-modal" style="max-width:360px;margin:0 auto">
+    <div class="day-modal-header">
+      <div class="day-modal-title">${done?(a.name[lang]||a.name.ja):(lang==='zh'?'???':'???')}</div>
+      <button class="day-modal-close" onclick="this.closest('.day-modal-bg').remove()">&#10005;</button>
+    </div>
+    <div class="ach-modal-icon">${done?'⭐':'<span style="font-size:40px;color:var(--border)">○</span>'}</div>
+    <div class="ach-modal-name">${done?(a.name[lang]||a.name.ja):(lang==='zh'?'未解锁':'未開放')}</div>
+    <div class="ach-modal-desc">${done?(a.desc[lang]||a.desc.ja):''}</div>
+    ${done
+      ?`<div class="ach-modal-date">📅 ${dateStr}</div>`
+      :`<div class="ach-modal-hint">💡 ${a.hint[lang]||a.hint.ja}</div>`
+    }
+  </div>`;
+  bg.addEventListener('click',e=>{if(e.target===bg)bg.remove();});
+  document.body.appendChild(bg);
+}
+
+
 applyI18n();
 setMode(timerMode);
 drawT();
